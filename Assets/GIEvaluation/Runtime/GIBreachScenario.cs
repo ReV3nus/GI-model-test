@@ -245,7 +245,10 @@ namespace GIEvaluation
                 changeFrame = LastChangeFrame, framesSinceChange = Time.frameCount - LastChangeFrame,
                 secondsSinceChange = Time.realtimeSinceStartupAsDouble - LastChangeTime,
                 unity = Application.unityVersion, device = SystemInfo.graphicsDeviceName,
-                note = "Fixture only. No GI implementation or GI accuracy/performance score is provided."
+                giEnabled = global::DynamicGI.DynamicGIController.Instance && global::DynamicGI.DynamicGIController.Instance.GIEnabled,
+                giIndirectOnly = global::DynamicGI.DynamicGIController.Instance && global::DynamicGI.DynamicGIController.Instance.IndirectOnly,
+                giSamples = global::DynamicGI.DynamicGIController.Instance ? global::DynamicGI.DynamicGIController.Instance.SampleIndex : 0,
+                note = "Dynamic GI capture. See IMPLEMENTATION.md and Reports/DynamicGI for measured comparisons; this capture is not an accuracy score."
             };
             File.WriteAllText(Path.Combine(folder, stem + ".json"), JsonUtility.ToJson(data, true));
             message = "Saved " + stem;
@@ -257,6 +260,8 @@ namespace GIEvaluation
             public float skyIntensity, fieldOfView;
             public double secondsSinceChange;
             public bool previewFill, interiorLightsEnabled, shutterClosed;
+            public bool giEnabled, giIndirectOnly;
+            public int giSamples;
             public Vector3 cameraPosition, cameraRotation;
         }
 
@@ -290,7 +295,7 @@ namespace GIEvaluation
             GUILayout.BeginArea(new Rect(14, 14, 325, Mathf.Min(Screen.height - 28, 740)), GUI.skin.box);
             panelScroll = GUILayout.BeginScrollView(panelScroll);
             GUILayout.Label("GI LAB / 7 STEPS", new GUIStyle(textStyle) { fontSize = 20, fontStyle = FontStyle.Bold });
-            GUILayout.Label("GI NOT IMPLEMENTED | " + (preview ? "PREVIEW FILL ON" : "EVALUATION"), textStyle);
+            GUILayout.Label("DYNAMIC GI | " + (preview ? "PREVIEW FILL ON" : "EVALUATION"), textStyle);
             GUILayout.Label("Outdoor " + environment.lighting + " | Dim lamps " + (environment.interiorLightsEnabled ? "ON" : "OFF"), textStyle);
             GUILayout.Label("Same camera: " + viewNames[View], textStyle);
             GUILayout.Label(Descriptions[(int)state], new GUIStyle(textStyle) { fontSize = 14 });

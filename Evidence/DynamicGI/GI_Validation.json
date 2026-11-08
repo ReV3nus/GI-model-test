@@ -1,0 +1,351 @@
+{
+    "meaning": "Physics visibility checks only; no GI algorithm, accuracy or GPU performance claim.",
+    "renderers": 239,
+    "triangles": 15440,
+    "materials": 12,
+    "sealedEnvelopeRays": 52,
+    "sealedEnvelopeMisses": 0,
+    "missingScripts": 0,
+    "missingMeshes": 0,
+    "missingMaterials": 0,
+    "interiorLampCount": 2,
+    "passed": true,
+    "states": [
+        {
+            "state": "Sealed",
+            "roofOpening": 0,
+            "exteriorPathOpen": false,
+            "expectedExteriorPath": false,
+            "interiorPathOpen": false,
+            "expectedInteriorPath": false,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Exterior Facade",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                }
+            ]
+        },
+        {
+            "state": "SmallBreach",
+            "roofOpening": 0,
+            "exteriorPathOpen": true,
+            "expectedExteriorPath": true,
+            "interiorPathOpen": false,
+            "expectedInteriorPath": false,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                }
+            ]
+        },
+        {
+            "state": "LargeBreach",
+            "roofOpening": 0,
+            "exteriorPathOpen": true,
+            "expectedExteriorPath": true,
+            "interiorPathOpen": false,
+            "expectedInteriorPath": false,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                }
+            ]
+        },
+        {
+            "state": "ConnectedRooms",
+            "roofOpening": 0,
+            "exteriorPathOpen": true,
+            "expectedExteriorPath": true,
+            "interiorPathOpen": true,
+            "expectedInteriorPath": true,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                }
+            ]
+        },
+        {
+            "state": "SmallRoofBreach",
+            "roofOpening": 1,
+            "exteriorPathOpen": true,
+            "expectedExteriorPath": true,
+            "interiorPathOpen": true,
+            "expectedInteriorPath": true,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                }
+            ]
+        },
+        {
+            "state": "LargeRoofBreach",
+            "roofOpening": 2,
+            "exteriorPathOpen": true,
+            "expectedExteriorPath": true,
+            "interiorPathOpen": true,
+            "expectedInteriorPath": true,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Visible",
+                    "occluder": "",
+                    "directSun": true,
+                    "expectedSun": true,
+                    "passed": true
+                }
+            ]
+        },
+        {
+            "state": "Restored",
+            "roofOpening": 0,
+            "exteriorPathOpen": false,
+            "expectedExteriorPath": false,
+            "interiorPathOpen": false,
+            "expectedInteriorPath": false,
+            "passed": true,
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Exterior Facade",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "result": "Back facing",
+                    "occluder": "",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "result": "Occluded",
+                    "occluder": "Destructible Roof And Ceiling",
+                    "directSun": false,
+                    "expectedSun": false,
+                    "passed": true
+                }
+            ]
+        }
+    ],
+    "roofs": [
+        {
+            "opening": 0,
+            "leftOpen": false,
+            "rightOpen": false,
+            "benchSun": false,
+            "roomBDirectSun": false,
+            "passed": true
+        },
+        {
+            "opening": 1,
+            "leftOpen": true,
+            "rightOpen": false,
+            "benchSun": true,
+            "roomBDirectSun": false,
+            "passed": true
+        },
+        {
+            "opening": 2,
+            "leftOpen": true,
+            "rightOpen": true,
+            "benchSun": true,
+            "roomBDirectSun": false,
+            "passed": true
+        }
+    ],
+    "blocker": {
+        "sunBefore": true,
+        "sunCovered": false,
+        "sunAfter": true,
+        "sameCamera": true,
+        "sameOpenings": true,
+        "sameSun": true,
+        "passed": true
+    }
+}

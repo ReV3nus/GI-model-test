@@ -1,0 +1,221 @@
+#pragma kernel CSMain
+#pragma kernel CSProbe
+#pragma target 5.0
+
+// All transport intersections are against the world-space scene BVH, including
+// secondary rays. The screen only determines which receivers are displayed.
+struct triIndex
+{
+    float3 v0; float p0;
+    float3 e1; float p1;
+    float3 e2; float p2;
+    float3 n0; float p3;
+    float3 n1; float p4;
+    float3 n2; float p5;
+    float3 albedo; float p6;
+};
+struct Node
+{
+    float3 minimum; int left;
+    float3 maximum; int right;
+    int start; int count; float2 padding;
+};
+struct Hit
+{
+    float t;
+    int triIndex;
+    float2 barycentric;
+};
+StructuredBuffer<triIndex> _Triangles;
+StructuredBuffer<Node> _Nodes;
+RWTexture2D<float4> _Output;
+Texture2D<float4> _History;
+TextureCube<float4> _Sky;
+SamplerState sampler_Sky;
+int _TriangleCount, _NodeCount;
+int2 _Size;
+int _SampleIndex, _SamplesPerPixel, _BounceCount;
+float4x4 _CameraToWorld, _CameraInverseProjection;
+float3 _SunDirection, _SunRadiance;
+float _SkyIntensity, _MaxDistance, _RayBias;
+
+uint Hash(uint v)
+{
+    v ^= v >> 16; v *= 0x7feb352du;
+    v ^= v >> 15; v *= 0x846ca68bu;
+    return v ^ (v >> 16);
+}
+float Random(inout uint state)
+{
+    state = Hash(state + 0x9e3779b9u);
+    return (state >> 8) * (1.0 / 16777216.0);
+}
+bool IntersectBox(float3 origin, float3 invDirection, Node node, float maximum)
+{
+    float3 a = (node.minimum - origin) * invDirection;
+    float3 b = (node.maximum - origin) * invDirection;
+    float3 nearV = min(a, b), farV = max(a, b);
+    float nearT = max(max(nearV.x, nearV.y), nearV.z);
+    float farT = min(min(farV.x, farV.y), farV.z);
+    return farT >= max(nearT, 0.0) && nearT < maximum;
+}
+bool IntersectTriangle(float3 origin, float3 direction, triIndex tri, inout Hit hit, int index)
+{
+    float3 p = cross(direction, tri.e2);
+    float determinant = dot(tri.e1, p);
+    if (abs(determinant) < 1e-8) return false;
+    float invDeterminant = rcp(determinant);
+    float3 tvec = origin - tri.v0;
+    float u = dot(tvec, p) * invDeterminant;
+    if (u < 0 || u > 1) return false;
+    float3 q = cross(tvec, tri.e1);
+    float v = dot(direction, q) * invDeterminant;
+    if (v < 0 || u + v > 1) return false;
+    float distance = dot(tri.e2, q) * invDeterminant;
+    if (distance < 1e-5 || distance >= hit.t) return false;
+    hit.t = distance; hit.triIndex = index; hit.barycentric = float2(u, v);
+    return true;
+}
+bool Trace(float3 origin, float3 direction, float maximum, bool anyHit, out Hit hit)
+{
+    hit.t = maximum; hit.triIndex = -1; hit.barycentric = 0;
+    if (_NodeCount == 0 || _TriangleCount == 0) return false;
+    // A balanced binary tree needs log2(triIndex count) stack entries.
+    int stack[64]; int top = 0; stack[top++] = 0;
+    float3 safeDirection = float3(
+        abs(direction.x) > 1e-10 ? direction.x : (direction.x < 0 ? -1e-10 : 1e-10),
+        abs(direction.y) > 1e-10 ? direction.y : (direction.y < 0 ? -1e-10 : 1e-10),
+        abs(direction.z) > 1e-10 ? direction.z : (direction.z < 0 ? -1e-10 : 1e-10));
+    float3 invDirection = rcp(safeDirection);
+    while (top > 0)
+    {
+        Node node = _Nodes[stack[--top]];
+        if (!IntersectBox(origin, invDirection, node, hit.t)) continue;
+        if (node.count > 0)
+        {
+            for (int i = 0; i < node.count; i++)
+            {
+                int index = node.start + i;
+                if (IntersectTriangle(origin, direction, _Triangles[index], hit, index) && anyHit) return true;
+            }
+        }
+        else
+        {
+            stack[top++] = node.left;
+            stack[top++] = node.right;
+        }
+    }
+    return hit.triIndex >= 0;
+}
+float3 SurfaceNormal(Hit hit, float3 incomingDirection)
+{
+    triIndex tri = _Triangles[hit.triIndex];
+    // Geometric normals keep the offset and hemisphere on the same side of thin
+    // walls. Normal maps and smoothed normals are deliberately not transport inputs.
+    float3 normal = normalize(cross(tri.e1, tri.e2));
+    return dot(normal, incomingDirection) > 0 ? -normal : normal;
+}
+float3 CosineHemisphere(float3 normal, inout uint rng)
+{
+    float u = Random(rng), phi = 6.28318530718 * Random(rng);
+    float radius = sqrt(u);
+    float3 tangent = normalize(cross(abs(normal.y) < .95 ? float3(0,1,0) : float3(1,0,0), normal));
+    float3 bitangent = cross(normal, tangent);
+    return normalize(tangent * (radius * cos(phi)) + bitangent * (radius * sin(phi)) + normal * sqrt(1-u));
+}
+float3 Indirect(float3 positionWS, float3 normal, float3 initialAlbedo, inout uint rng, bool skipPrimarySky)
+{
+    float3 result = 0, throughput = initialAlbedo;
+    for (int bounce = 0; bounce < _BounceCount; bounce++)
+    {
+        float3 direction = CosineHemisphere(normal, rng);
+        float3 origin = positionWS + normal * _RayBias;
+        Hit hit;
+        if (!Trace(origin, direction, _MaxDistance, false, hit))
+        {
+            if (bounce > 0 || !skipPrimarySky)
+                result += throughput * _Sky.SampleLevel(sampler_Sky, direction, 0).rgb * _SkyIntensity;
+            break;
+        }
+        positionWS = origin + direction * hit.t;
+        normal = SurfaceNormal(hit, direction);
+        throughput *= _Triangles[hit.triIndex].albedo;
+        // No solar NEE at the primary surface: URP already renders that light.
+        // At a secondary hit this is actual reflected radiance rho * E / pi.
+        float cosine = max(0, dot(normal, _SunDirection));
+        if (cosine > 0 && any(_SunRadiance > 0))
+        {
+            Hit shadow;
+            if (!Trace(positionWS + normal * _RayBias, _SunDirection, _MaxDistance, true, shadow))
+                result += throughput * _SunRadiance * (cosine / 3.14159265359);
+        }
+    }
+    return result;
+}
+
+[numthreads(8,8,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id.xy >= (uint2)_Size)) return;
+    float2 uv = (float2(id.xy) + .5) / float2(_Size);
+    // Texture row zero is displayed at the top on D3D; the CPU supplies the
+    // ordinary (non-GPU-flipped) Unity camera projection matrix.
+    float2 clip = float2(uv.x * 2 - 1, 1 - uv.y * 2);
+    float4 local = mul(_CameraInverseProjection, float4(clip, -1, 1));
+    float3 localDirection = normalize(local.xyz / local.w);
+    float3 direction = normalize(mul((float3x3)_CameraToWorld, localDirection));
+    float3 origin = mul(_CameraToWorld, float4(0,0,0,1)).xyz;
+    Hit primary;
+    float3 radiance = 0;
+    float eyeDepth = 0;
+    if (Trace(origin, direction, _MaxDistance, false, primary))
+    {
+        float3 positionWS = origin + direction * primary.t;
+        float3 normal = SurfaceNormal(primary, direction);
+        eyeDepth = primary.t * -localDirection.z;
+        for (int s = 0; s < _SamplesPerPixel; s++)
+        {
+            uint rng = Hash(id.x + id.y * (uint)_Size.x) ^ Hash((uint)(_SampleIndex * _SamplesPerPixel + s) + 811u);
+            radiance += Indirect(positionWS, normal, _Triangles[primary.triIndex].albedo, rng, false);
+        }
+        radiance /= max(1, _SamplesPerPixel);
+    }
+    // A reset is represented by sample zero, so stale memory is never used.
+    if (_SampleIndex > 0)
+        radiance = lerp(_History[id.xy].rgb, radiance, rcp((float)_SampleIndex + 1));
+    _Output[id.xy] = float4(max(radiance, 0), eyeDepth);
+}
+
+// Diagnostic receiver queries use the exact same world-space transport routine
+// as the image. Neither the camera nor image history participates in the result.
+// xyz is outgoing radiance for a unit-white Lambertian receiver; w is the
+// estimated standard error of its luminance (independent Monte Carlo samples).
+StructuredBuffer<float4> _ProbePositions;
+StructuredBuffer<float4> _ProbeNormals;
+RWStructuredBuffer<float4> _ProbeResults;
+int _ProbeCount, _ProbeSamples, _ProbeBounceOnly;
+
+[numthreads(8,1,1)]
+void CSProbe(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_ProbeCount) return;
+    float3 positionWS = _ProbePositions[id.x].xyz;
+    float3 normal = normalize(_ProbeNormals[id.x].xyz);
+    float3 sum = 0;
+    float luminanceMean = 0, luminanceM2 = 0;
+    int count = max(1, _ProbeSamples);
+    for (int s = 0; s < count; s++)
+    {
+        uint rng = Hash(id.x + 104729u) ^ Hash((uint)s + 811u);
+        float3 value = Indirect(positionWS, normal, float3(1,1,1), rng, _ProbeBounceOnly != 0);
+        sum += value;
+        float luminance = dot(value, float3(.2126,.7152,.0722));
+        float delta = luminance - luminanceMean;
+        luminanceMean += delta / (s+1);
+        luminanceM2 += delta * (luminance-luminanceMean);
+    }
+    float standardError = count > 1 ? sqrt(max(0, luminanceM2) / ((float)count * (count-1))) : 0;
+    _ProbeResults[id.x] = float4(sum / count, standardError);
+}
+
+

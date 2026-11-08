@@ -1,0 +1,4392 @@
+{
+    "startedUtc": "2026-11-07T23:44:13.8906362Z",
+    "finishedUtc": "2026-11-07T23:45:03.6904400Z",
+    "status": "completed",
+    "unity": "6000.5.4f1",
+    "graphicsDevice": "NVIDIA GeForce RTX 4080 Laptop GPU",
+    "graphicsAPI": "Direct3D12",
+    "samplesPerProbe": 8192,
+    "bounceCount": 2,
+    "width": 1109,
+    "height": 548,
+    "method": "World-space GPU diagnostic probes at each original fixture receiver position + normal*0.02, with normalized receiver normal and white Lambertian receiver albedo. Total includes visible diffuse sky and reflected light. BounceOnly excludes sky paths that escape before hitting a secondary surface. Neither query adds primary direct sun. These raw linear radiances do not include the actual receiver material, exposure, tone mapping or screen upsampling.",
+    "timingMeaning": "Each query synchronously dispatches and reads back the stated sample budget. Diagnostic milliseconds include GPU completion and CPU readback; they are not regular interactive GI frame costs. Mutations settle for two frames before querying; this test measures transport after update, not minimum update latency.",
+    "comparisonMeaning": "Checks describe only the recorded diagnostic receivers and sample budget. Geometrically restored and camera-only comparisons use identical world rays if SampleProbes is deterministic. A positive BounceOnly value proves a reflected path at this receiver; it does not establish visual quality or lack of leaks everywhere.",
+    "queries": [
+        {
+            "label": "combined-step1",
+            "state": "Sealed",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "lighting changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 1,
+            "frame": 3176,
+            "geometryRevision": 98,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 1,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15152,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06083569999827887,
+            "secondsSinceFixtureChange": 0.06081449999874167,
+            "secondsSinceInvalidation": 0.008136200000080862,
+            "totalDiagnosticMilliseconds": 1106.3783,
+            "bounceOnlyDiagnosticMilliseconds": 927.8046,
+            "lastGeometryBuildMilliseconds": 43.868900000000007,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "combined-step2",
+            "state": "SmallBreach",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 2,
+            "frame": 3178,
+            "geometryRevision": 103,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.08933710000019346,
+            "secondsSinceFixtureChange": 0.08848419999958424,
+            "secondsSinceInvalidation": 0.04725229999894509,
+            "totalDiagnosticMilliseconds": 1030.1858,
+            "bounceOnlyDiagnosticMilliseconds": 1042.5216,
+            "lastGeometryBuildMilliseconds": 37.421600000000008,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.02711014822125435,
+                        "y": 0.03393624722957611,
+                        "z": 0.04182024300098419
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.016424143686890603,
+                        "y": 0.01635522022843361,
+                        "z": 0.012155135162174702
+                    },
+                    "totalLuminance": 0.03305424377322197,
+                    "bounceOnlyLuminance": 0.016066627576947213,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.002823453163728118,
+                        "y": 0.0024882531724870207,
+                        "z": 0.0028545004315674307
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.001689684228040278,
+                        "y": 0.0009671421139501035,
+                        "z": 0.0007193440687842667
+                    },
+                    "totalLuminance": 0.002585959853604436,
+                    "bounceOnlyLuminance": 0.0011028635781258345,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00033414087374694645,
+                        "y": 0.00027587739168666303,
+                        "z": 0.0002673966228030622
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0002774270542431623,
+                        "y": 0.0002022656553890556,
+                        "z": 0.00016785682237241417
+                    },
+                    "totalLuminance": 0.00028765189927071333,
+                    "bounceOnlyLuminance": 0.00021576065046247095,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "combined-step3",
+            "state": "LargeBreach",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 3,
+            "frame": 3180,
+            "geometryRevision": 112,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.0630036000002292,
+            "secondsSinceFixtureChange": 0.06125590000010561,
+            "secondsSinceInvalidation": 0.01885960000072373,
+            "totalDiagnosticMilliseconds": 1003.4321,
+            "bounceOnlyDiagnosticMilliseconds": 982.7843,
+            "lastGeometryBuildMilliseconds": 41.1637,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.05883990228176117,
+                        "y": 0.07931851595640183,
+                        "z": 0.1116807609796524
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.023916911333799363,
+                        "y": 0.023537015542387964,
+                        "z": 0.019649988040328027
+                    },
+                    "totalLuminance": 0.07730131596326828,
+                    "bounceOnlyLuminance": 0.023337138816714288,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.011054135859012604,
+                        "y": 0.010191664099693299,
+                        "z": 0.012445267289876938
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.006087830290198326,
+                        "y": 0.003298412077128887,
+                        "z": 0.002415171591565013
+                    },
+                    "totalLuminance": 0.010537736117839814,
+                    "bounceOnlyLuminance": 0.003827672451734543,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.001825779676437378,
+                        "y": 0.0019469752442091704,
+                        "z": 0.0023483585100620987
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0009187159594148397,
+                        "y": 0.0007228741887956858,
+                        "z": 0.0006191693828441203
+                    },
+                    "totalLuminance": 0.0019501888891682029,
+                    "bounceOnlyLuminance": 0.000757022644393146,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "combined-step4",
+            "state": "ConnectedRooms",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3182,
+            "geometryRevision": 116,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06827239999984158,
+            "secondsSinceFixtureChange": 0.06676960000004329,
+            "secondsSinceInvalidation": 0.022851199999422535,
+            "totalDiagnosticMilliseconds": 990.5711,
+            "bounceOnlyDiagnosticMilliseconds": 968.5849000000001,
+            "lastGeometryBuildMilliseconds": 42.636700000000008,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.05883990228176117,
+                        "y": 0.07931851595640183,
+                        "z": 0.1116807609796524
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.023916911333799363,
+                        "y": 0.023537015542387964,
+                        "z": 0.019649988040328027
+                    },
+                    "totalLuminance": 0.07730131596326828,
+                    "bounceOnlyLuminance": 0.023337138816714288,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.011054135859012604,
+                        "y": 0.010191664099693299,
+                        "z": 0.012445267289876938
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.006087830290198326,
+                        "y": 0.003298412077128887,
+                        "z": 0.002415171591565013
+                    },
+                    "totalLuminance": 0.010537736117839814,
+                    "bounceOnlyLuminance": 0.003827672451734543,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "totalLuminance": 0.000029307298973435536,
+                    "bounceOnlyLuminance": 0.000029307298973435536,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.001810810761526227,
+                        "y": 0.0019354972755536438,
+                        "z": 0.002338689286261797
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0009037468698807061,
+                        "y": 0.0007113962201401591,
+                        "z": 0.000609499984420836
+                    },
+                    "totalLuminance": 0.0019380993908271194,
+                    "bounceOnlyLuminance": 0.0007449330296367407,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "combined-step5",
+            "state": "SmallRoofBreach",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 5,
+            "frame": 3184,
+            "geometryRevision": 121,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15396,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.09747880000031728,
+            "secondsSinceFixtureChange": 0.09598259999984293,
+            "secondsSinceInvalidation": 0.017855300000519493,
+            "totalDiagnosticMilliseconds": 1160.8534,
+            "bounceOnlyDiagnosticMilliseconds": 1183.6004,
+            "lastGeometryBuildMilliseconds": 76.9791,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0607723742723465,
+                        "y": 0.08283903449773789,
+                        "z": 0.11807350814342499
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.024051608517766,
+                        "y": 0.023682057857513429,
+                        "z": 0.019821764901280404
+                    },
+                    "totalLuminance": 0.08069159090518952,
+                    "bounceOnlyLuminance": 0.023481911048293115,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.016270417720079423,
+                        "y": 0.017476152628660203,
+                        "z": 0.02354293502867222
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.007767354603856802,
+                        "y": 0.004794031847268343,
+                        "z": 0.0037808690685778858
+                    },
+                    "totalLuminance": 0.01765783503651619,
+                    "bounceOnlyLuminance": 0.005353009793907404,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00025171582819893956,
+                        "y": 0.00028869020752608776,
+                        "z": 0.00040658414945937693
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00007826631190255284,
+                        "y": 0.000040377308323513716,
+                        "z": 0.00003399546039872803
+                    },
+                    "totalLuminance": 0.0002893414057325572,
+                    "bounceOnlyLuminance": 0.000047971741878427565,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.011786788702011109,
+                        "y": 0.011668259277939797,
+                        "z": 0.012176262214779854
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.008850391022861004,
+                        "y": 0.0070656114257872108,
+                        "z": 0.00469569256529212
+                    },
+                    "totalLuminance": 0.011730136349797249,
+                    "bounceOnlyLuminance": 0.007273947354406118,
+                    "directSunVisible": true,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "combined-step6",
+            "state": "LargeRoofBreach",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 6,
+            "frame": 3186,
+            "geometryRevision": 137,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15476,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.060831500000858799,
+            "secondsSinceFixtureChange": 0.05774399999972957,
+            "secondsSinceInvalidation": 0.016557599999941887,
+            "totalDiagnosticMilliseconds": 1238.5005,
+            "bounceOnlyDiagnosticMilliseconds": 1255.0944,
+            "lastGeometryBuildMilliseconds": 39.9789,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.06804893910884857,
+                        "y": 0.09621503204107285,
+                        "z": 0.1426449865102768
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.024679305031895639,
+                        "y": 0.02429482713341713,
+                        "z": 0.020567430183291436
+                    },
+                    "totalLuminance": 0.09357916563749314,
+                    "bounceOnlyLuminance": 0.024107448756694795,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.029895566403865815,
+                        "y": 0.037234075367450717,
+                        "z": 0.05558200180530548
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.01080755889415741,
+                        "y": 0.00693519739434123,
+                        "z": 0.005840227473527193
+                    },
+                    "totalLuminance": 0.036998629570007327,
+                    "bounceOnlyLuminance": 0.007679404690861702,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.01163570862263441,
+                        "y": 0.01863067038357258,
+                        "z": 0.03135623782873154
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0025291501078754665,
+                        "y": 0.0026110559701919557,
+                        "z": 0.0030225624796003105
+                    },
+                    "totalLuminance": 0.018062327057123185,
+                    "bounceOnlyLuminance": 0.0026233536191284658,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.03303686901926994,
+                        "y": 0.031747445464134219,
+                        "z": 0.04293578490614891
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.020916486158967019,
+                        "y": 0.01140272244811058,
+                        "z": 0.008099592290818692
+                    },
+                    "totalLuminance": 0.03282937407493591,
+                    "bounceOnlyLuminance": 0.0131868626922369,
+                    "directSunVisible": true,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "combined-step7",
+            "state": "Restored",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 7,
+            "frame": 3188,
+            "geometryRevision": 158,
+            "lightingRevision": 14,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15152,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06411300000036136,
+            "secondsSinceFixtureChange": 0.06059410000125354,
+            "secondsSinceInvalidation": 0.021510000000489528,
+            "totalDiagnosticMilliseconds": 917.8724000000001,
+            "bounceOnlyDiagnosticMilliseconds": 926.4962,
+            "lastGeometryBuildMilliseconds": 37.9577,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "SunOnly-Sealed",
+            "state": "Sealed",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "lighting changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 1,
+            "frame": 3190,
+            "geometryRevision": 158,
+            "lightingRevision": 15,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15152,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.014857000000120025,
+            "secondsSinceFixtureChange": 0.014836500000455999,
+            "secondsSinceInvalidation": 0.01457010000012815,
+            "totalDiagnosticMilliseconds": 930.9024000000001,
+            "bounceOnlyDiagnosticMilliseconds": 911.2532,
+            "lastGeometryBuildMilliseconds": 37.9577,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "SunOnly-ConnectedRooms",
+            "state": "ConnectedRooms",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3192,
+            "geometryRevision": 167,
+            "lightingRevision": 15,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06539140000131738,
+            "secondsSinceFixtureChange": 0.06423960000029183,
+            "secondsSinceInvalidation": 0.025160700000924409,
+            "totalDiagnosticMilliseconds": 965.4462000000001,
+            "bounceOnlyDiagnosticMilliseconds": 975.0597,
+            "lastGeometryBuildMilliseconds": 37.8254,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "totalLuminance": 0.017251402139663698,
+                    "bounceOnlyLuminance": 0.017251402139663698,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "totalLuminance": 0.002636067336425185,
+                    "bounceOnlyLuminance": 0.002636067336425185,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0000533763159182854,
+                        "y": 0.000021200001356191933,
+                        "z": 0.000012632477591978386
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0000533763159182854,
+                        "y": 0.000021200001356191933,
+                        "z": 0.000012632477591978386
+                    },
+                    "totalLuminance": 0.000027422111088526435,
+                    "bounceOnlyLuminance": 0.000027422111088526435,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0003530541143845767,
+                        "y": 0.0002546962059568614,
+                        "z": 0.0001322505559073761
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0003530541143845767,
+                        "y": 0.0002546962059568614,
+                        "z": 0.0001322505559073761
+                    },
+                    "totalLuminance": 0.0002667665248736739,
+                    "bounceOnlyLuminance": 0.0002667665248736739,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "SunOnly-Restored",
+            "state": "Restored",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 7,
+            "frame": 3194,
+            "geometryRevision": 176,
+            "lightingRevision": 15,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15152,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.05864640000072541,
+            "secondsSinceFixtureChange": 0.05724209999971208,
+            "secondsSinceInvalidation": 0.015642500000467409,
+            "totalDiagnosticMilliseconds": 901.1176,
+            "bounceOnlyDiagnosticMilliseconds": 919.178,
+            "lastGeometryBuildMilliseconds": 40.429700000000007,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "SkyOnly-Sealed",
+            "state": "Sealed",
+            "lighting": "SkyOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "lighting changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 1,
+            "frame": 3196,
+            "geometryRevision": 176,
+            "lightingRevision": 16,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15152,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.01533460000064224,
+            "secondsSinceFixtureChange": 0.015313800000512856,
+            "secondsSinceInvalidation": 0.0150006999992911,
+            "totalDiagnosticMilliseconds": 710.2772,
+            "bounceOnlyDiagnosticMilliseconds": 722.2783000000001,
+            "lastGeometryBuildMilliseconds": 40.429700000000007,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "SkyOnly-ConnectedRooms",
+            "state": "ConnectedRooms",
+            "lighting": "SkyOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3198,
+            "geometryRevision": 185,
+            "lightingRevision": 16,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06038260000059381,
+            "secondsSinceFixtureChange": 0.059021900000516328,
+            "secondsSinceInvalidation": 0.016533399999389077,
+            "totalDiagnosticMilliseconds": 733.4433,
+            "bounceOnlyDiagnosticMilliseconds": 741.7773000000001,
+            "lastGeometryBuildMilliseconds": 41.271,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.03952048718929291,
+                        "y": 0.06209314987063408,
+                        "z": 0.10026337206363678
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0045983451418578629,
+                        "y": 0.006310922093689442,
+                        "z": 0.008232705295085907
+                    },
+                    "totalLuminance": 0.06005009263753891,
+                    "bounceOnlyLuminance": 0.00608558114618063,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.006741455756127834,
+                        "y": 0.007919859141111374,
+                        "z": 0.011137757450342179
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0017751397099345923,
+                        "y": 0.0010266128228977323,
+                        "z": 0.0011076709488406778
+                    },
+                    "totalLuminance": 0.007901662960648537,
+                    "bounceOnlyLuminance": 0.0011916020885109902,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.000008023685040825512,
+                        "y": 2.3712371444162273e-7,
+                        "z": 1.352224785478029e-7
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.000008023685040825512,
+                        "y": 2.3712371444162273e-7,
+                        "z": 1.352224785478029e-7
+                    },
+                    "totalLuminance": 0.0000018851893628379913,
+                    "bounceOnlyLuminance": 0.0000018851893628379913,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0014577555702999235,
+                        "y": 0.0016808005748316646,
+                        "z": 0.0022064391523599626
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.000550692027900368,
+                        "y": 0.0004567002470139414,
+                        "z": 0.0004772489774040878
+                    },
+                    "totalLuminance": 0.0016713322838768364,
+                    "bounceOnlyLuminance": 0.00047816650476306677,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "SkyOnly-Restored",
+            "state": "Restored",
+            "lighting": "SkyOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 7,
+            "frame": 3200,
+            "geometryRevision": 194,
+            "lightingRevision": 16,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15152,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.05570570000054431,
+            "secondsSinceFixtureChange": 0.05444350000107079,
+            "secondsSinceInvalidation": 0.015492100001210929,
+            "totalDiagnosticMilliseconds": 724.1785,
+            "bounceOnlyDiagnosticMilliseconds": 737.4698000000001,
+            "lastGeometryBuildMilliseconds": 37.8005,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step2-open",
+            "state": "SmallBreach",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "lighting changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 2,
+            "frame": 3202,
+            "geometryRevision": 199,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.060383899999578719,
+            "secondsSinceFixtureChange": 0.05917839999892749,
+            "secondsSinceInvalidation": 0.018931799999336364,
+            "totalDiagnosticMilliseconds": 1038.4758000000002,
+            "bounceOnlyDiagnosticMilliseconds": 1065.2307,
+            "lastGeometryBuildMilliseconds": 38.978500000000007,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.015257290564477444,
+                        "y": 0.014707008376717568,
+                        "z": 0.00994598213583231
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.015257290564477444,
+                        "y": 0.014707008376717568,
+                        "z": 0.00994598213583231
+                    },
+                    "totalLuminance": 0.01448025181889534,
+                    "bounceOnlyLuminance": 0.01448025181889534,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0011459055822342635,
+                        "y": 0.0006168690742924809,
+                        "z": 0.00035628024488687515
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0011459055822342635,
+                        "y": 0.0006168690742924809,
+                        "z": 0.00035628024488687515
+                    },
+                    "totalLuminance": 0.0007105277036316693,
+                    "bounceOnlyLuminance": 0.0007105277036316693,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00009783467976376414,
+                        "y": 0.00008092495409073308,
+                        "z": 0.0000432806700700894
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00009783467976376414,
+                        "y": 0.00008092495409073308,
+                        "z": 0.0000432806700700894
+                    },
+                    "totalLuminance": 0.00008180204167729244,
+                    "bounceOnlyLuminance": 0.00008180204167729244,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step2-blocked",
+            "state": "SmallBreach",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": true,
+            "preset": 2,
+            "frame": 3204,
+            "geometryRevision": 200,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.0573686000007001,
+            "secondsSinceFixtureChange": 0.057028500001251817,
+            "secondsSinceInvalidation": 0.016870299999936834,
+            "totalDiagnosticMilliseconds": 1019.2618,
+            "bounceOnlyDiagnosticMilliseconds": 1047.1556,
+            "lastGeometryBuildMilliseconds": 39.013600000000007,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step2-reopened",
+            "state": "SmallBreach",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 2,
+            "frame": 3206,
+            "geometryRevision": 201,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06600450000041747,
+            "secondsSinceFixtureChange": 0.06549020000056771,
+            "secondsSinceInvalidation": 0.0195956000006845,
+            "totalDiagnosticMilliseconds": 1041.5990000000002,
+            "bounceOnlyDiagnosticMilliseconds": 1054.6508000000001,
+            "lastGeometryBuildMilliseconds": 44.452600000000007,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.015257290564477444,
+                        "y": 0.014707008376717568,
+                        "z": 0.00994598213583231
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.015257290564477444,
+                        "y": 0.014707008376717568,
+                        "z": 0.00994598213583231
+                    },
+                    "totalLuminance": 0.01448025181889534,
+                    "bounceOnlyLuminance": 0.01448025181889534,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0011459055822342635,
+                        "y": 0.0006168690742924809,
+                        "z": 0.00035628024488687515
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0011459055822342635,
+                        "y": 0.0006168690742924809,
+                        "z": 0.00035628024488687515
+                    },
+                    "totalLuminance": 0.0007105277036316693,
+                    "bounceOnlyLuminance": 0.0007105277036316693,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00009783467976376414,
+                        "y": 0.00008092495409073308,
+                        "z": 0.0000432806700700894
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00009783467976376414,
+                        "y": 0.00008092495409073308,
+                        "z": 0.0000432806700700894
+                    },
+                    "totalLuminance": 0.00008180204167729244,
+                    "bounceOnlyLuminance": 0.00008180204167729244,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step3-open",
+            "state": "LargeBreach",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 3,
+            "frame": 3208,
+            "geometryRevision": 210,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06546789999993053,
+            "secondsSinceFixtureChange": 0.06401480000022275,
+            "secondsSinceInvalidation": 0.018858299999919838,
+            "totalDiagnosticMilliseconds": 973.6880000000001,
+            "bounceOnlyDiagnosticMilliseconds": 984.1658000000001,
+            "lastGeometryBuildMilliseconds": 43.965700000000008,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "totalLuminance": 0.017251402139663698,
+                    "bounceOnlyLuminance": 0.017251402139663698,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "totalLuminance": 0.002636067336425185,
+                    "bounceOnlyLuminance": 0.002636067336425185,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00036093933158554137,
+                        "y": 0.0002581930020824075,
+                        "z": 0.00013397376460488886
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00036093933158554137,
+                        "y": 0.0002581930020824075,
+                        "z": 0.00013397376460488886
+                    },
+                    "totalLuminance": 0.0002710682456381619,
+                    "bounceOnlyLuminance": 0.0002710682456381619,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step3-blocked",
+            "state": "LargeBreach",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": true,
+            "preset": 3,
+            "frame": 3210,
+            "geometryRevision": 211,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.056133199999749198,
+            "secondsSinceFixtureChange": 0.0556233000006614,
+            "secondsSinceInvalidation": 0.015447100000528735,
+            "totalDiagnosticMilliseconds": 951.4544000000001,
+            "bounceOnlyDiagnosticMilliseconds": 961.341,
+            "lastGeometryBuildMilliseconds": 39.052800000000008,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.000003407217491258052,
+                        "y": 0.0000031359668355435135,
+                        "z": 0.000001738944774842821
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.000003407217491258052,
+                        "y": 0.0000031359668355435135,
+                        "z": 0.000001738944774842821
+                    },
+                    "totalLuminance": 0.0000030927697025617819,
+                    "bounceOnlyLuminance": 0.0000030927697025617819,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step3-reopened",
+            "state": "LargeBreach",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 3,
+            "frame": 3212,
+            "geometryRevision": 212,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15220,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.05319899999994959,
+            "secondsSinceFixtureChange": 0.052757600000404639,
+            "secondsSinceInvalidation": 0.01405930000146327,
+            "totalDiagnosticMilliseconds": 992.2044000000001,
+            "bounceOnlyDiagnosticMilliseconds": 997.1398,
+            "lastGeometryBuildMilliseconds": 37.5995,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "totalLuminance": 0.017251402139663698,
+                    "bounceOnlyLuminance": 0.017251402139663698,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "totalLuminance": 0.002636067336425185,
+                    "bounceOnlyLuminance": 0.002636067336425185,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00036093933158554137,
+                        "y": 0.0002581930020824075,
+                        "z": 0.00013397376460488886
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00036093933158554137,
+                        "y": 0.0002581930020824075,
+                        "z": 0.00013397376460488886
+                    },
+                    "totalLuminance": 0.0002710682456381619,
+                    "bounceOnlyLuminance": 0.0002710682456381619,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step4-open",
+            "state": "ConnectedRooms",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3214,
+            "geometryRevision": 216,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06552940000074159,
+            "secondsSinceFixtureChange": 0.06432660000064061,
+            "secondsSinceInvalidation": 0.0204663000004075,
+            "totalDiagnosticMilliseconds": 973.4904,
+            "bounceOnlyDiagnosticMilliseconds": 980.5802,
+            "lastGeometryBuildMilliseconds": 42.6282,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "totalLuminance": 0.017251402139663698,
+                    "bounceOnlyLuminance": 0.017251402139663698,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "totalLuminance": 0.002636067336425185,
+                    "bounceOnlyLuminance": 0.002636067336425185,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0000533763159182854,
+                        "y": 0.000021200001356191933,
+                        "z": 0.000012632477591978386
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0000533763159182854,
+                        "y": 0.000021200001356191933,
+                        "z": 0.000012632477591978386
+                    },
+                    "totalLuminance": 0.000027422111088526435,
+                    "bounceOnlyLuminance": 0.000027422111088526435,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0003530541143845767,
+                        "y": 0.0002546962059568614,
+                        "z": 0.0001322505559073761
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0003530541143845767,
+                        "y": 0.0002546962059568614,
+                        "z": 0.0001322505559073761
+                    },
+                    "totalLuminance": 0.0002667665248736739,
+                    "bounceOnlyLuminance": 0.0002667665248736739,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step4-blocked",
+            "state": "ConnectedRooms",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": true,
+            "preset": 4,
+            "frame": 3216,
+            "geometryRevision": 217,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.06028180000066641,
+            "secondsSinceFixtureChange": 0.05987269999968703,
+            "secondsSinceInvalidation": 0.015759100000650507,
+            "totalDiagnosticMilliseconds": 952.9132000000001,
+            "bounceOnlyDiagnosticMilliseconds": 972.4052,
+            "lastGeometryBuildMilliseconds": 42.9557,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.000003407217491258052,
+                        "y": 0.0000031359668355435135,
+                        "z": 0.000001738944774842821
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.000003407217491258052,
+                        "y": 0.0000031359668355435135,
+                        "z": 0.000001738944774842821
+                    },
+                    "totalLuminance": 0.0000030927697025617819,
+                    "bounceOnlyLuminance": 0.0000030927697025617819,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalLuminance": 0.0,
+                    "bounceOnlyLuminance": 0.0,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "blocker-step4-reopened",
+            "state": "ConnectedRooms",
+            "lighting": "SunOnly",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "geometry rebuilt",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3218,
+            "geometryRevision": 218,
+            "lightingRevision": 17,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.05659670000022743,
+            "secondsSinceFixtureChange": 0.05602720000024419,
+            "secondsSinceInvalidation": 0.015097800000148709,
+            "totalDiagnosticMilliseconds": 968.3528,
+            "bounceOnlyDiagnosticMilliseconds": 944.4612000000001,
+            "lastGeometryBuildMilliseconds": 39.7425,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.01931850053369999,
+                        "y": 0.01722589321434498,
+                        "z": 0.011417307890951634
+                    },
+                    "totalLuminance": 0.017251402139663698,
+                    "bounceOnlyLuminance": 0.017251402139663698,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.004312682896852493,
+                        "y": 0.00227179704234004,
+                        "z": 0.0013075018068775535
+                    },
+                    "totalLuminance": 0.002636067336425185,
+                    "bounceOnlyLuminance": 0.002636067336425185,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0000533763159182854,
+                        "y": 0.000021200001356191933,
+                        "z": 0.000012632477591978386
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0000533763159182854,
+                        "y": 0.000021200001356191933,
+                        "z": 0.000012632477591978386
+                    },
+                    "totalLuminance": 0.000027422111088526435,
+                    "bounceOnlyLuminance": 0.000027422111088526435,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.0003530541143845767,
+                        "y": 0.0002546962059568614,
+                        "z": 0.0001322505559073761
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0003530541143845767,
+                        "y": 0.0002546962059568614,
+                        "z": 0.0001322505559073761
+                    },
+                    "totalLuminance": 0.0002667665248736739,
+                    "bounceOnlyLuminance": 0.0002667665248736739,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "camera-0",
+            "state": "ConnectedRooms",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "lighting changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3220,
+            "geometryRevision": 218,
+            "lightingRevision": 18,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 2,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.018464900000253694,
+            "secondsSinceFixtureChange": 0.01873689999956696,
+            "secondsSinceInvalidation": 0.01836659999935364,
+            "totalDiagnosticMilliseconds": 959.6269000000001,
+            "bounceOnlyDiagnosticMilliseconds": 960.8061,
+            "lastGeometryBuildMilliseconds": 39.7425,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.05883990228176117,
+                        "y": 0.07931851595640183,
+                        "z": 0.1116807609796524
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.023916911333799363,
+                        "y": 0.023537015542387964,
+                        "z": 0.019649988040328027
+                    },
+                    "totalLuminance": 0.07730131596326828,
+                    "bounceOnlyLuminance": 0.023337138816714288,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.011054135859012604,
+                        "y": 0.010191664099693299,
+                        "z": 0.012445267289876938
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.006087830290198326,
+                        "y": 0.003298412077128887,
+                        "z": 0.002415171591565013
+                    },
+                    "totalLuminance": 0.010537736117839814,
+                    "bounceOnlyLuminance": 0.003827672451734543,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "totalLuminance": 0.000029307298973435536,
+                    "bounceOnlyLuminance": 0.000029307298973435536,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.001810810761526227,
+                        "y": 0.0019354972755536438,
+                        "z": 0.002338689286261797
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0009037468698807061,
+                        "y": 0.0007113962201401591,
+                        "z": 0.000609499984420836
+                    },
+                    "totalLuminance": 0.0019380993908271194,
+                    "bounceOnlyLuminance": 0.0007449330296367407,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "camera-1",
+            "state": "ConnectedRooms",
+            "lighting": "SunAndSky",
+            "view": "Room B - interior opening",
+            "invalidationReason": "camera changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3222,
+            "geometryRevision": 218,
+            "lightingRevision": 18,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 4,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.015373000000181492,
+            "secondsSinceFixtureChange": 1.9566300999995293,
+            "secondsSinceInvalidation": 0.015281199999662931,
+            "totalDiagnosticMilliseconds": 950.2323,
+            "bounceOnlyDiagnosticMilliseconds": 957.1919,
+            "lastGeometryBuildMilliseconds": 39.7425,
+            "cameraPosition": {
+                "x": 4.800000190734863,
+                "y": 1.600000023841858,
+                "z": 2.9000000953674318
+            },
+            "cameraEuler": {
+                "x": 3.309661626815796,
+                "y": 296.3180847167969,
+                "z": -2.1379999282089558e-7
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.05883990228176117,
+                        "y": 0.07931851595640183,
+                        "z": 0.1116807609796524
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.023916911333799363,
+                        "y": 0.023537015542387964,
+                        "z": 0.019649988040328027
+                    },
+                    "totalLuminance": 0.07730131596326828,
+                    "bounceOnlyLuminance": 0.023337138816714288,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.011054135859012604,
+                        "y": 0.010191664099693299,
+                        "z": 0.012445267289876938
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.006087830290198326,
+                        "y": 0.003298412077128887,
+                        "z": 0.002415171591565013
+                    },
+                    "totalLuminance": 0.010537736117839814,
+                    "bounceOnlyLuminance": 0.003827672451734543,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "totalLuminance": 0.000029307298973435536,
+                    "bounceOnlyLuminance": 0.000029307298973435536,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.001810810761526227,
+                        "y": 0.0019354972755536438,
+                        "z": 0.002338689286261797
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0009037468698807061,
+                        "y": 0.0007113962201401591,
+                        "z": 0.000609499984420836
+                    },
+                    "totalLuminance": 0.0019380993908271194,
+                    "bounceOnlyLuminance": 0.0007449330296367407,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        },
+        {
+            "label": "camera-2",
+            "state": "ConnectedRooms",
+            "lighting": "SunAndSky",
+            "view": "Room A - fixed comparison view",
+            "invalidationReason": "camera changed",
+            "interiorLightsEnabled": false,
+            "previewFill": false,
+            "shutterClosed": false,
+            "preset": 4,
+            "frame": 3224,
+            "geometryRevision": 218,
+            "lightingRevision": 18,
+            "framesSinceOperation": 2,
+            "framesSinceFixtureChange": 6,
+            "framesSinceInvalidation": 2,
+            "samplesPerProbe": 8192,
+            "bounceCount": 2,
+            "triangles": 15280,
+            "nodes": 8191,
+            "secondsSinceOperation": 0.032649800001308907,
+            "secondsSinceFixtureChange": 3.8987364000004165,
+            "secondsSinceInvalidation": 0.032470300000568389,
+            "totalDiagnosticMilliseconds": 959.1753,
+            "bounceOnlyDiagnosticMilliseconds": 960.5286000000001,
+            "lastGeometryBuildMilliseconds": 39.7425,
+            "cameraPosition": {
+                "x": -3.0,
+                "y": 1.7000000476837159,
+                "z": 8.899999618530274
+            },
+            "cameraEuler": {
+                "x": 1.4170295000076295,
+                "y": 166.65127563476563,
+                "z": 1.334429367005896e-8
+            },
+            "probes": [
+                {
+                    "name": "Direct_Control",
+                    "originalPoint": {
+                        "x": -4.300000190734863,
+                        "y": 0.10499999672174454,
+                        "z": 1.600000023841858
+                    },
+                    "sampleOrigin": {
+                        "x": -4.300000190734863,
+                        "y": 0.125,
+                        "z": 1.600000023841858
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.05883990228176117,
+                        "y": 0.07931851595640183,
+                        "z": 0.1116807609796524
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.023916911333799363,
+                        "y": 0.023537015542387964,
+                        "z": 0.019649988040328027
+                    },
+                    "totalLuminance": 0.07730131596326828,
+                    "bounceOnlyLuminance": 0.023337138816714288,
+                    "directSunVisible": true,
+                    "finite": true
+                },
+                {
+                    "name": "Room_A_Indirect",
+                    "originalPoint": {
+                        "x": -0.17000000178813935,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "sampleOrigin": {
+                        "x": -0.1899999976158142,
+                        "y": 1.2000000476837159,
+                        "z": 2.5999999046325685
+                    },
+                    "normal": {
+                        "x": -1.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.011054135859012604,
+                        "y": 0.010191664099693299,
+                        "z": 0.012445267289876938
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.006087830290198326,
+                        "y": 0.003298412077128887,
+                        "z": 0.002415171591565013
+                    },
+                    "totalLuminance": 0.010537736117839814,
+                    "bounceOnlyLuminance": 0.003827672451734543,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Room_B_Indirect",
+                    "originalPoint": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.650000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": 3.6500000953674318,
+                        "y": 1.2000000476837159,
+                        "z": 7.630000114440918
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": -1.0
+                    },
+                    "totalRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.00006140000186860561,
+                        "y": 0.00002143712481483817,
+                        "z": 0.000012767700354743283
+                    },
+                    "totalLuminance": 0.000029307298973435536,
+                    "bounceOnlyLuminance": 0.000029307298973435536,
+                    "directSunVisible": false,
+                    "finite": true
+                },
+                {
+                    "name": "Roof_Direct_Control",
+                    "originalPoint": {
+                        "x": -4.949999809265137,
+                        "y": 1.0700000524520875,
+                        "z": 7.400000095367432
+                    },
+                    "sampleOrigin": {
+                        "x": -4.949999809265137,
+                        "y": 1.090000033378601,
+                        "z": 7.400000095367432
+                    },
+                    "normal": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "totalRGB": {
+                        "x": 0.001810810761526227,
+                        "y": 0.0019354972755536438,
+                        "z": 0.002338689286261797
+                    },
+                    "bounceOnlyRGB": {
+                        "x": 0.0009037468698807061,
+                        "y": 0.0007113962201401591,
+                        "z": 0.000609499984420836
+                    },
+                    "totalLuminance": 0.0019380993908271194,
+                    "bounceOnlyLuminance": 0.0007449330296367407,
+                    "directSunVisible": false,
+                    "finite": true
+                }
+            ]
+        }
+    ],
+    "checks": [
+        {
+            "name": "All diagnostic radiances finite",
+            "status": "passed",
+            "meaning": "Checks all recorded RGB values for NaN/Infinity.",
+            "measured": 1.0,
+            "threshold": 1.0
+        },
+        {
+            "name": "combined: sealed exterior contribution zero",
+            "status": "passed",
+            "meaning": "Maximum raw RGB component across original world-space diagnostic receivers; interior lamps disabled.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "combined: restored exterior contribution zero",
+            "status": "passed",
+            "meaning": "Maximum raw RGB component after restoring the original envelope.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "combined: restored matches sealed",
+            "status": "passed",
+            "meaning": "Maximum absolute RGB difference across both Total and BounceOnly diagnostics.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "combined: open state has reflected light",
+            "status": "passed",
+            "meaning": "BounceOnly excludes paths directly escaping the primary receiver to the sky, so a nonzero value requires a secondary surface hit.",
+            "measured": 0.023916911333799363,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SunOnly: sealed exterior contribution zero",
+            "status": "passed",
+            "meaning": "Maximum raw RGB component across original world-space diagnostic receivers; interior lamps disabled.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SunOnly: restored exterior contribution zero",
+            "status": "passed",
+            "meaning": "Maximum raw RGB component after restoring the original envelope.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SunOnly: restored matches sealed",
+            "status": "passed",
+            "meaning": "Maximum absolute RGB difference across both Total and BounceOnly diagnostics.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SunOnly: open state has reflected light",
+            "status": "passed",
+            "meaning": "BounceOnly excludes paths directly escaping the primary receiver to the sky, so a nonzero value requires a secondary surface hit.",
+            "measured": 0.01931850053369999,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SkyOnly: sealed exterior contribution zero",
+            "status": "passed",
+            "meaning": "Maximum raw RGB component across original world-space diagnostic receivers; interior lamps disabled.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SkyOnly: restored exterior contribution zero",
+            "status": "passed",
+            "meaning": "Maximum raw RGB component after restoring the original envelope.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SkyOnly: restored matches sealed",
+            "status": "passed",
+            "meaning": "Maximum absolute RGB difference across both Total and BounceOnly diagnostics.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "SkyOnly: open state has reflected light",
+            "status": "passed",
+            "meaning": "BounceOnly excludes paths directly escaping the primary receiver to the sky, so a nonzero value requires a secondary surface hit.",
+            "measured": 0.008232705295085907,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 2: reflected contribution exists",
+            "status": "passed",
+            "meaning": "At least one fixture diagnostic receiver receives reflected radiance; this does not assert every receiver is lit.",
+            "measured": 0.016424143686890603,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 3: reflected contribution exists",
+            "status": "passed",
+            "meaning": "At least one fixture diagnostic receiver receives reflected radiance; this does not assert every receiver is lit.",
+            "measured": 0.023916911333799363,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 4: reflected contribution exists",
+            "status": "passed",
+            "meaning": "At least one fixture diagnostic receiver receives reflected radiance; this does not assert every receiver is lit.",
+            "measured": 0.023916911333799363,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 5: reflected contribution exists",
+            "status": "passed",
+            "meaning": "At least one fixture diagnostic receiver receives reflected radiance; this does not assert every receiver is lit.",
+            "measured": 0.024051608517766,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 6: reflected contribution exists",
+            "status": "passed",
+            "meaning": "At least one fixture diagnostic receiver receives reflected radiance; this does not assert every receiver is lit.",
+            "measured": 0.024679305031895639,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Opening inner partition increases Room B reflected radiance",
+            "status": "passed",
+            "meaning": "Same original Room_B_Indirect world receiver, same exterior opening/roof/lights; only fixture partition and its debris change.",
+            "measured": 0.000029307298973435536,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Room B comparison receiver remains out of direct sun",
+            "status": "passed",
+            "meaning": "Original fixture visibility query at Room_B_Indirect.",
+            "measured": 0.0,
+            "threshold": 0.0
+        },
+        {
+            "name": "Step 2: blocker reduces reflected input",
+            "status": "passed",
+            "meaning": "Sum of original receivers' BounceOnly luminance; SunOnly and interior lamps off. Only outside blocker moves between these queries.",
+            "measured": 0.01527258101850748,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 2: blocker reopening restores input",
+            "status": "passed",
+            "meaning": "Identical world-ray diagnostic comparisons; tolerance is absolute linear RGB.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 3: blocker reduces reflected input",
+            "status": "passed",
+            "meaning": "Sum of original receivers' BounceOnly luminance; SunOnly and interior lamps off. Only outside blocker moves between these queries.",
+            "measured": 0.020155446603894235,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 3: blocker reopening restores input",
+            "status": "passed",
+            "meaning": "Identical world-ray diagnostic comparisons; tolerance is absolute linear RGB.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 4: blocker reduces reflected input",
+            "status": "passed",
+            "meaning": "Sum of original receivers' BounceOnly luminance; SunOnly and interior lamps off. Only outside blocker moves between these queries.",
+            "measured": 0.02017856575548649,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Step 4: blocker reopening restores input",
+            "status": "passed",
+            "meaning": "Identical world-ray diagnostic comparisons; tolerance is absolute linear RGB.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Camera-only change 1 preserves world transport",
+            "status": "passed",
+            "meaning": "All original world receivers including offscreen points; camera changes only. This tests transport camera independence, not screen accumulation noise or edge filtering.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        },
+        {
+            "name": "Camera-only change 2 preserves world transport",
+            "status": "passed",
+            "meaning": "All original world receivers including offscreen points; camera changes only. This tests transport camera independence, not screen accumulation noise or edge filtering.",
+            "measured": 0.0,
+            "threshold": 0.000001
+        }
+    ],
+    "passed": 28,
+    "failed": 0
+}

@@ -1,0 +1,167 @@
+{
+    "label": "step4-on",
+    "image": "step4-on.png",
+    "indirectImage": "step4-on-indirect.exr",
+    "state": "ConnectedRooms",
+    "lighting": "SunAndSky",
+    "view": "Room A - fixed comparison view",
+    "invalidationReason": "geometry rebuilt",
+    "indirectBufferMeaning": "Current enabled GI radiance and eye depth cache.",
+    "timingWindowMeaning": "Steady window after discarding the first eight wait frames; excludes image readback and file writing.",
+    "giEnabled": true,
+    "indirectOnly": false,
+    "previewFill": false,
+    "interiorLightsEnabled": false,
+    "shutterClosed": false,
+    "width": 1920,
+    "height": 1080,
+    "giWidth": 480,
+    "giHeight": 270,
+    "preset": 4,
+    "roofOpening": 0,
+    "geometryRevision": 28,
+    "lightingRevision": 3,
+    "frame": 775,
+    "framesSinceFixtureChange": 65,
+    "framesSinceOperation": 65,
+    "framesSinceInvalidation": 64,
+    "sampleIndex": 65,
+    "secondsSinceFixtureChange": 0.7053121999997529,
+    "secondsSinceOperation": 0.7064019999997981,
+    "secondsSinceInvalidation": 0.663616899999397,
+    "triangles": 15280,
+    "nodes": 8191,
+    "frameTimingSamples": 56,
+    "gpuTimingSamples": 56,
+    "geometryBufferBytes": 4202336,
+    "historyBufferEstimateBytes": 4147200,
+    "totalAllocatedBytes": 867542792,
+    "managedHeapBytes": 904376320,
+    "lastBuildMilliseconds": 37.9523,
+    "peakBuildMilliseconds": 37.9523,
+    "averageDispatchSubmissionMilliseconds": 0.034387499999999997,
+    "meanFrameMilliseconds": 8.464262962341309,
+    "medianFrameMilliseconds": 8.124298095703125,
+    "p95FrameMilliseconds": 10.099000930786133,
+    "maxFrameMilliseconds": 10.85849666595459,
+    "wholeFrameGPUMilliseconds": 0.881078839302063,
+    "gpuTimingMeaning": "Whole-frame GPU time returned by FrameTimingManager, not isolated GI pass cost.",
+    "cameraPosition": {
+        "x": -3.0,
+        "y": 1.7000000476837159,
+        "z": 8.899999618530274
+    },
+    "cameraEuler": {
+        "x": 1.4170295000076295,
+        "y": 166.65127563476563,
+        "z": 1.334429367005896e-8
+    },
+    "fieldOfView": 72.0,
+    "imageMeanLuminance": 0.025260314345359803,
+    "imageMaxLuminance": 0.7270094156265259,
+    "indirectMeanLuminance": 0.0017486073775216938,
+    "indirectMaxLuminance": 0.1627497375011444,
+    "indirectNonzeroPixels": 122577,
+    "receivers": [
+        {
+            "name": "Direct_Control",
+            "worldPoint": {
+                "x": -4.300000190734863,
+                "y": 0.10499999672174454,
+                "z": 1.600000023841858
+            },
+            "viewport": {
+                "x": 0.6669702529907227,
+                "y": 0.35649728775024416,
+                "z": 6.839995861053467
+            },
+            "inView": true,
+            "directSunVisible": true,
+            "indirectMean": {
+                "r": 0.0036347254645079376,
+                "g": 0.005646052770316601,
+                "b": 0.00738872867077589,
+                "a": 5.61275577545166
+            },
+            "sampledDepth": 5.6067070960998539,
+            "receiverEyeDepth": 6.839995861053467,
+            "depthDifference": 1.2332887649536133,
+            "meaning": "5x5 GI pixel neighborhood projected from original fixture receiver. Compute texture row zero stores the top camera ray, so readback uses 1-viewport.y. May cover a different visible surface if depthDifference is large."
+        },
+        {
+            "name": "Room_A_Indirect",
+            "worldPoint": {
+                "x": -0.17000000178813935,
+                "y": 1.2000000476837159,
+                "z": 2.5999999046325685
+            },
+            "viewport": {
+                "x": 0.4259791076183319,
+                "y": 0.4663572311401367,
+                "z": 6.793463706970215
+            },
+            "inView": true,
+            "directSunVisible": false,
+            "indirectMean": {
+                "r": 0.005365774035453796,
+                "g": 0.004672374110668898,
+                "b": 0.00446905754506588,
+                "a": 6.810400485992432
+            },
+            "sampledDepth": 6.808247089385986,
+            "receiverEyeDepth": 6.793463706970215,
+            "depthDifference": 0.014783382415771485,
+            "meaning": "5x5 GI pixel neighborhood projected from original fixture receiver. Compute texture row zero stores the top camera ray, so readback uses 1-viewport.y. May cover a different visible surface if depthDifference is large."
+        },
+        {
+            "name": "Room_B_Indirect",
+            "worldPoint": {
+                "x": 3.6500000953674318,
+                "y": 1.2000000476837159,
+                "z": 7.650000095367432
+            },
+            "viewport": {
+                "x": -0.3660598397254944,
+                "y": 0.39245256781578066,
+                "z": 2.763084650039673
+            },
+            "inView": false,
+            "directSunVisible": false,
+            "indirectMean": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+            },
+            "sampledDepth": 0.0,
+            "receiverEyeDepth": 2.763084650039673,
+            "depthDifference": 0.0,
+            "meaning": "5x5 GI pixel neighborhood projected from original fixture receiver. Compute texture row zero stores the top camera ray, so readback uses 1-viewport.y. May cover a different visible surface if depthDifference is large."
+        },
+        {
+            "name": "Roof_Direct_Control",
+            "worldPoint": {
+                "x": -4.949999809265137,
+                "y": 1.0700000524520875,
+                "z": 7.400000095367432
+            },
+            "viewport": {
+                "x": 1.3477284908294678,
+                "y": 0.09371626377105713,
+                "z": 1.0245338678359986
+            },
+            "inView": false,
+            "directSunVisible": false,
+            "indirectMean": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+            },
+            "sampledDepth": 0.0,
+            "receiverEyeDepth": 1.0245338678359986,
+            "depthDifference": 0.0,
+            "meaning": "5x5 GI pixel neighborhood projected from original fixture receiver. Compute texture row zero stores the top camera ray, so readback uses 1-viewport.y. May cover a different visible surface if depthDifference is large."
+        }
+    ]
+}
