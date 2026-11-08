@@ -1,0 +1,140 @@
+{
+    "image": "small-blocked-on.png",
+    "phase": "on",
+    "lighting": "SunOnly",
+    "state": "SmallBreach",
+    "view": "Room A - fixed comparison view",
+    "graphics": "Direct3D12",
+    "device": "NVIDIA GeForce RTX 4080 Laptop GPU",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13980HX",
+    "unity": "6000.5.4f1",
+    "gi": true,
+    "lamps": false,
+    "blocker": true,
+    "preview": false,
+    "width": 1280,
+    "height": 720,
+    "step": 2,
+    "frame": 1396,
+    "framesSinceChange": 63,
+    "paths": 1024,
+    "triangles": 15220,
+    "nodes": 9421,
+    "receivers": 61030,
+    "readbackSecondsSinceChange": 0.8355494000006729,
+    "secondsSinceChange": 0.8125904999997147,
+    "lastRebuildMs": 0.1699,
+    "submitMs": 0.0744,
+    "displayMeshBytes": 2191680,
+    "structuredBufferBytes": 3961472,
+    "probes": [
+        {
+            "name": "Direct_Control",
+            "sunVisible": false,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": -4.300000190734863,
+                "y": 0.0949999988079071,
+                "z": 1.600000023841858
+            },
+            "surfaceNormal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "distance": 0.009999997913837433,
+            "localSamples": 12,
+            "localMean": {
+                "x": 0.00001730943586153444,
+                "y": 0.000005502514341060305,
+                "z": 1.5518088503085893e-7
+            }
+        },
+        {
+            "name": "Room_A_Indirect",
+            "sunVisible": false,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": -0.16499999165534974,
+                "y": 1.2000000476837159,
+                "z": 2.5999999046325685
+            },
+            "surfaceNormal": {
+                "x": -1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "distance": 0.005000010132789612,
+            "localSamples": 4,
+            "localMean": {
+                "x": 2.3367174861732566e-8,
+                "y": 3.020055316937942e-10,
+                "z": 5.33716430425879e-12
+            }
+        },
+        {
+            "name": "Room_B_Indirect",
+            "sunVisible": false,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": 3.6500000953674318,
+                "y": 1.2000000476837159,
+                "z": 7.65500020980835
+            },
+            "surfaceNormal": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -1.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "distance": 0.005000114440917969,
+            "localSamples": 16,
+            "localMean": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "name": "Roof_Direct_Control",
+            "sunVisible": false,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": -4.949999809265137,
+                "y": 1.059999942779541,
+                "z": 7.400000095367432
+            },
+            "surfaceNormal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "distance": 0.010000109672546387,
+            "localSamples": 6,
+            "localMean": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    ]
+}

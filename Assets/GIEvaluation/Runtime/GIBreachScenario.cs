@@ -48,6 +48,7 @@ namespace GIEvaluation
         public bool ShutterClosed { get; private set; }
         public bool TimelineRunning => timeline != null;
         private Coroutine timeline;
+        public DynamicDiffuseGI Transport { get; private set; }
         private GUIStyle textStyle;
         private GUIStyle markerStyle;
         private Vector2 panelScroll;
@@ -82,6 +83,8 @@ namespace GIEvaluation
                 Application.targetFrameRate = editorFrameLimit; QualitySettings.vSyncCount = 0; changedEditorLimit = true;
             }
             ApplyState(state);
+            if (!TryGetComponent<DynamicDiffuseGI>(out var transport)) transport = gameObject.AddComponent<DynamicDiffuseGI>();
+            Transport = transport;
             SetPreview(preview);
             SetView(0);
         }
@@ -245,7 +248,8 @@ namespace GIEvaluation
                 changeFrame = LastChangeFrame, framesSinceChange = Time.frameCount - LastChangeFrame,
                 secondsSinceChange = Time.realtimeSinceStartupAsDouble - LastChangeTime,
                 unity = Application.unityVersion, device = SystemInfo.graphicsDeviceName,
-                note = "Fixture only. No GI implementation or GI accuracy/performance score is provided."
+                giEnabled = Transport && Transport.showGI, paths = Transport ? Transport.Paths : 0,
+                note = "World-space diffuse transport; paths per surface sample."
             };
             File.WriteAllText(Path.Combine(folder, stem + ".json"), JsonUtility.ToJson(data, true));
             message = "Saved " + stem;
@@ -254,6 +258,8 @@ namespace GIEvaluation
         {
             public string utc, scene, state, lighting, view, unity, device, note;
             public int geometryRevision, lightingRevision, width, height, frame, changeFrame, framesSinceChange, roofOpening, preset;
+            public bool giEnabled;
+            public int paths;
             public float skyIntensity, fieldOfView;
             public double secondsSinceChange;
             public bool previewFill, interiorLightsEnabled, shutterClosed;
@@ -290,7 +296,8 @@ namespace GIEvaluation
             GUILayout.BeginArea(new Rect(14, 14, 325, Mathf.Min(Screen.height - 28, 740)), GUI.skin.box);
             panelScroll = GUILayout.BeginScrollView(panelScroll);
             GUILayout.Label("GI LAB / 7 STEPS", new GUIStyle(textStyle) { fontSize = 20, fontStyle = FontStyle.Bold });
-            GUILayout.Label("GI NOT IMPLEMENTED | " + (preview ? "PREVIEW FILL ON" : "EVALUATION"), textStyle);
+            if (Transport && GUILayout.Button("G  |  Diffuse GI " + (Transport.showGI ? "ON  " + Transport.Status + "  " + Transport.Paths + " spp" : "OFF"))) Transport.showGI = !Transport.showGI;
+            GUILayout.Label(preview ? "PREVIEW FILL ON" : "EVALUATION", textStyle);
             GUILayout.Label("Outdoor " + environment.lighting + " | Dim lamps " + (environment.interiorLightsEnabled ? "ON" : "OFF"), textStyle);
             GUILayout.Label("Same camera: " + viewNames[View], textStyle);
             GUILayout.Label(Descriptions[(int)state], new GUIStyle(textStyle) { fontSize = 14 });

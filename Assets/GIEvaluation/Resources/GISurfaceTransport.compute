@@ -1,0 +1,194 @@
+#pragma kernel Solve
+
+// World-space BVH. Leaf ranges refer to consecutive reordered triangles.
+struct Node { float3 lo; int left; float3 hi; int right; };
+struct Triangle { float3 a; float r; float3 e1; float g; float3 e2; float b; };
+struct Receiver { float3 position; float pad0; float3 normal; float pad1; };
+StructuredBuffer<Node> _Nodes;
+StructuredBuffer<Triangle> _Triangles;
+StructuredBuffer<Receiver> _Samples;
+RWStructuredBuffer<float4> _Irradiance;
+TextureCube<float4> _Sky;
+SamplerState sampler_Sky;
+
+int _TriangleCount, _SampleCount, _StartSample, _RaysPerSample;
+int _ReceiverOffset, _ReceiverEnd;
+float3 _SunDirection, _SunColor;
+float _SkyIntensity;
+
+static const float RayBias = 0.001;
+static const float Far = 1e20;
+static const float Tau = 6.28318530718;
+
+float boxEntry(Node n, float3 p, float3 invD, float limit)
+{
+    float3 a = (n.lo - 0.00001 - p) * invD;
+    float3 b = (n.hi + 0.00001 - p) * invD;
+    float3 lo = min(a, b);
+    float3 hi = max(a, b);
+    float t = max(0.0, max(lo.x, max(lo.y, lo.z)));
+    return t <= min(limit, min(hi.x, min(hi.y, hi.z))) ? t : Far;
+}
+
+bool intersectTriangle(Triangle tri, float3 p, float3 d, inout float closest)
+{
+    float3 h = cross(d, tri.e2);
+    float det = dot(tri.e1, h);
+    if (abs(det) < 1e-10) return false;
+    float3 v = p - tri.a;
+    float u = dot(v, h) / det;
+    if (u < -1e-6 || u > 1.000001) return false;
+    float3 q = cross(v, tri.e1);
+    float w = dot(d, q) / det;
+    if (w < -1e-6 || u + w > 1.000001) return false;
+    float t = dot(tri.e2, q) / det;
+    if (t < 0.00003 || t >= closest) return false;
+    closest = t;
+    return true;
+}
+
+int trace(float3 p, float3 d, bool anyHit, out float distanceToHit)
+{
+    distanceToHit = Far;
+    if (_TriangleCount == 0) return -1;
+    float3 safeD = max(abs(d), 1e-12) * (step(0, d) * 2 - 1);
+    float3 invD = rcp(safeD);
+    int deferred[32]; // The CPU builder caps its hierarchy at depth 29.
+    int top = 0;
+    int cur = 0;
+    int hit = -1;
+    [loop] while (true)
+    {
+        Node node = _Nodes[cur];
+        if (node.right < 0)
+        {
+            [loop] for (int i = node.left; i < node.left - node.right; ++i)
+            {
+                if (intersectTriangle(_Triangles[i], p, d, distanceToHit))
+                {
+                    if (anyHit) return i;
+                    hit = i;
+                }
+            }
+        }
+        else
+        {
+            float a = boxEntry(_Nodes[node.left], p, invD, distanceToHit);
+            float b = boxEntry(_Nodes[node.right], p, invD, distanceToHit);
+            if (min(a, b) < Far)
+            {
+                bool leftFirst = a < b;
+                cur = leftFirst ? node.left : node.right;
+                if (max(a,b) < Far) deferred[top++] = leftFirst ? node.right : node.left;
+                continue;
+            }
+        }
+        if (top == 0) break;
+        cur = deferred[--top];
+    }
+    return hit;
+}
+
+uint hash32(uint v)
+{
+    v ^= v >> 16; v *= 0x7feb352du;
+    v ^= v >> 15; v *= 0x846ca68bu;
+    return v ^ (v >> 16);
+}
+
+// First ten dimensions of a 16-bit Sobol net. Each word packs the direction
+// numbers for a pair of dimensions (azimuth and squared radius). Consecutive
+// diffuse vertices use distinct dimensions; duplicate positions use identical shifts.
+static const uint SobolPairs[80] = {
+    0x80008000u, 0x4000c000u, 0x2000a000u, 0x1000f000u, 0x8008800u, 0x400cc00u, 0x200aa00u, 0x100ff00u,
+    0x808080u, 0x40c0c0u, 0x20a0a0u, 0x10f0f0u, 0x88888u, 0x4ccccu, 0x2aaaau, 0x1ffffu,
+    0x80008000u, 0xc000c000u, 0x60002000u, 0x90005000u, 0xe800f800u, 0x5c007400u, 0x8e00a200u, 0xc5009300u,
+    0x6880d880u, 0x9cc02540u, 0xee6059e0u, 0x5590e6d0u, 0x80687808u, 0xc09cb40cu, 0x60ee8202u, 0x9055c305u,
+    0x80008000u, 0x40004000u, 0x20006000u, 0xb0003000u, 0xf800c800u, 0xdc002400u, 0x7a005600u, 0x9d00fb00u,
+    0x5a80e080u, 0x2fc07040u, 0xa160a860u, 0xf0b01430u, 0xda889ec8u, 0x6fc4df24u, 0x8162b6d6u, 0x40bb8bbbu,
+    0x80008000u, 0xc0004000u, 0xa000a000u, 0xd0005000u, 0x58008800u, 0x94002400u, 0x3e001200u, 0xe3002d00u,
+    0xbe807680u, 0x23c09e40u, 0x1e200820u, 0xf3106410u, 0x4678b228u, 0x67847d14u, 0x7846fea2u, 0x8467ba49u,
+    0x80008000u, 0x40004000u, 0xa000e000u, 0x5000b000u, 0x28009800u, 0xd4009400u, 0x6a008a00u, 0x71005b00u,
+    0x38803380u, 0x5840d9c0u, 0xea207220u, 0x31103f10u, 0x98a8c1b8u, 0x854a6ecu, 0xc22a5386u, 0xe52529f5u
+};
+
+float2 samplePair(uint index, uint dimensionPair, uint seed)
+{
+    uint bits = (index ^ (index >> 1)) & 65535u;
+    uint p = hash32(seed + 0x9e3779b9u * dimensionPair);
+    [loop] while (bits != 0)
+    {
+        p ^= SobolPairs[16 * dimensionPair + firstbitlow(bits)];
+        bits &= bits - 1;
+    }
+    return (float2(p >> 16, p & 65535u) + 0.5) / 65536.0;
+}
+
+float3 cosineRay(float3 n, float2 uv)
+{
+    float3 tangent = normalize(cross(abs(n.z) > 0.9 ? float3(0,1,0) : float3(0,0,1), n));
+    float s, c;
+    sincos(Tau * uv.y, s, c);
+    return n * sqrt(1.0 - uv.x) + (c * tangent + s * cross(n, tangent)) * sqrt(uv.x);
+}
+
+float3 sky(float3 d)
+{
+    return _Sky.SampleLevel(sampler_Sky, d, 0).rgb * _SkyIntensity;
+}
+
+float3 directSun(float3 p, float3 n)
+{
+    float cosine = dot(n, _SunDirection);
+    if (cosine <= 0 || !any(_SunColor > 0)) return 0;
+    float t;
+    return trace(p, _SunDirection, true, t) < 0 ? _SunColor * cosine : 0;
+}
+
+[numthreads(64,1,1)]
+void Solve(uint3 id : SV_DispatchThreadID)
+{
+    uint index = (uint)_ReceiverOffset + id.x;
+    if (index >= (uint)_SampleCount || (_ReceiverEnd > 0 && index >= (uint)_ReceiverEnd)) return;
+    Receiver receiver = _Samples[index];
+    float3 n0 = normalize(receiver.normal);
+    float3 p0 = receiver.position + RayBias * n0;
+
+    // Shift a progressive low-discrepancy sequence per world-space sample. Rebuilding or
+    // changing the view preserves the sample pattern. Each path is independent of old geometry.
+    uint3 cell = asuint((int3)round(receiver.position * 256.0));
+    uint seed = hash32(cell.x) ^ hash32(cell.y + 57u) ^ hash32(cell.z + 397u);
+    float4 sum = 0;
+    [loop] for (int i = 0; i < _RaysPerSample; ++i)
+    {
+        uint k = (uint)(_StartSample + i);
+        float3 p = p0;
+        float3 d = cosineRay(n0, samplePair(k, 0, seed));
+        float3 weight = 1;
+        // At each actual surface hit, evaluate visible sunlight, then continue with a
+        // cosine-weighted diffuse sample. A miss integrates the cubemap along that path.
+        [loop] for (int bounce = 0; bounce <= 4; ++bounce)
+        {
+            float t;
+            int hit = trace(p, d, bounce == 4, t);
+            if (hit < 0)
+            {
+                if (_SkyIntensity > 0) sum.rgb += weight * sky(d);
+                if (bounce == 0) sum.a += 1;
+                break;
+            }
+            if (bounce == 4) break;
+            Triangle tri = _Triangles[hit];
+            float3 n = normalize(cross(tri.e1, tri.e2));
+            if (dot(n, d) > 0) n = -n;
+            p = p + t * d + n * RayBias;
+            weight *= float3(tri.r, tri.g, tri.b);
+            sum.rgb += weight * directSun(p, n);
+            if ((bounce == 3 && _SkyIntensity <= 0) || !any(weight > 0)) break;
+            float2 uv = samplePair(k, bounce + 1, seed);
+            d = cosineRay(n, uv);
+        }
+    }
+    if (_StartSample > 0) sum += _Irradiance[index] * _StartSample;
+    _Irradiance[index] = sum / (_StartSample + _RaysPerSample);
+}

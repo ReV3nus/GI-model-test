@@ -1,0 +1,140 @@
+{
+    "image": "step5-on.png",
+    "phase": "on",
+    "lighting": "SunOnly",
+    "state": "SmallRoofBreach",
+    "view": "Room A - fixed comparison view",
+    "graphics": "Direct3D12",
+    "device": "NVIDIA GeForce RTX 4080 Laptop GPU",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13980HX",
+    "unity": "6000.5.4f1",
+    "gi": true,
+    "lamps": false,
+    "blocker": false,
+    "preview": false,
+    "width": 1280,
+    "height": 720,
+    "step": 5,
+    "frame": 437,
+    "framesSinceChange": 63,
+    "paths": 1024,
+    "triangles": 15396,
+    "nodes": 9549,
+    "receivers": 61672,
+    "readbackSecondsSinceChange": 1.0203388000009,
+    "secondsSinceChange": 0.9948751000010816,
+    "lastRebuildMs": 69.039,
+    "submitMs": 0.1042,
+    "displayMeshBytes": 2217024,
+    "structuredBufferBytes": 4004832,
+    "probes": [
+        {
+            "name": "Direct_Control",
+            "sunVisible": true,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": -4.300000190734863,
+                "y": 0.0949999988079071,
+                "z": 1.600000023841858
+            },
+            "surfaceNormal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.053071632981300357,
+                "y": 0.044334281235933307,
+                "z": 0.028769711032509805
+            },
+            "distance": 0.009999997913837433,
+            "localSamples": 12,
+            "localMean": {
+                "x": 0.043679606169462207,
+                "y": 0.03769824281334877,
+                "z": 0.024805331602692605
+            }
+        },
+        {
+            "name": "Room_A_Indirect",
+            "sunVisible": false,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": -0.16499999165534974,
+                "y": 1.2000000476837159,
+                "z": 2.5999999046325685
+            },
+            "surfaceNormal": {
+                "x": -1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.016265612095594407,
+                "y": 0.009264132007956505,
+                "z": 0.00536644272506237
+            },
+            "distance": 0.005000010132789612,
+            "localSamples": 4,
+            "localMean": {
+                "x": 0.01643824763596058,
+                "y": 0.00913529098033905,
+                "z": 0.005256744101643562
+            }
+        },
+        {
+            "name": "Room_B_Indirect",
+            "sunVisible": false,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": 3.6500000953674318,
+                "y": 1.2000000476837159,
+                "z": 7.65500020980835
+            },
+            "surfaceNormal": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -1.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.00034215947380289435,
+                "y": 0.00010783883044496179,
+                "z": 0.00006387454050127417
+            },
+            "distance": 0.005000114440917969,
+            "localSamples": 16,
+            "localMean": {
+                "x": 0.0008438960066996515,
+                "y": 0.00038834253791719675,
+                "z": 0.00022906654339749366
+            }
+        },
+        {
+            "name": "Roof_Direct_Control",
+            "sunVisible": true,
+            "surfaceHit": true,
+            "surfacePosition": {
+                "x": -4.949999809265137,
+                "y": 1.059999942779541,
+                "z": 7.400000095367432
+            },
+            "surfaceNormal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "normalizedIrradiance": {
+                "x": 0.02861260622739792,
+                "y": 0.022057965397834779,
+                "z": 0.013362587429583073
+            },
+            "distance": 0.010000109672546387,
+            "localSamples": 6,
+            "localMean": {
+                "x": 0.02413927949965,
+                "y": 0.018644820898771287,
+                "z": 0.011309445835649968
+            }
+        }
+    ]
+}

@@ -1,0 +1,2 @@
+step,width,height,frame_limit,vsync,first_poll_ms,first_poll_frames,stable_poll_ms,stable_poll_frames,display_mesh_objects,profiler_mesh_bytes,structured_buffer_bytes
+6,1109,548,30,0,85.097,1,2349.237,64,12,4476096,4006464
