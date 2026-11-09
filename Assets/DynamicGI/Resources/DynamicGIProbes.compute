@@ -1,0 +1,451 @@
+// Probe update for the dynamic GI system: software BVH ray tracing, relocation/classification,
+// temporal blending of irradiance and distance moments, and octahedral border fix-up.
+#pragma kernel TraceProbes
+#pragma kernel RelocateProbes
+#pragma kernel BlendIrradiance
+#pragma kernel BlendDistance
+#pragma kernel BorderIrradiance
+#pragma kernel BorderDistance
+#pragma kernel ResetProbes
+
+#include "DynamicGICommon.hlsl"
+
+#define GI_MAX_LIGHTS 8
+#define GI_MAX_DIRTY 16
+#define GI_MAX_RAYS 192
+#define GI_STACK 40
+
+StructuredBuffer<GIBvhNode> _GINodes;        // TLAS nodes at [0, tlasCount), then every cached BLAS
+StructuredBuffer<GIInstance> _GIInstances;
+StructuredBuffer<GITriangle> _GITriangles;    // object space, .material = submesh index
+StructuredBuffer<float4> _GIMaterials;        // rgb diffuse reflectance
+RWStructuredBuffer<float4> _GIRayResults;     // rgb radiance, a signed hit distance (negative = backface)
+RWStructuredBuffer<float4> _GIProbeDataRW;
+RWTexture2D<float4> _GIIrradianceRW;
+RWTexture2D<float2> _GIDistanceRW;
+
+TextureCube<float4> _GISkyCube;
+SamplerState sampler_GISkyCube;
+float _GISkyIntensity;
+float _GISkyMip;
+
+int _GILightCount;
+float4 _GILightPosType[GI_MAX_LIGHTS];    // xyz position or direction to light, w type (0 directional, 1 point, 2 spot)
+float4 _GILightColor[GI_MAX_LIGHTS];      // rgb linear colour * intensity, w 1/range^2
+float4 _GILightSpot[GI_MAX_LIGHTS];       // xyz spot direction, x/y of _GILightSpotParams: angle scale/offset
+float4 _GILightSpotParams[GI_MAX_LIGHTS];
+
+int _GIRaysPerProbe;
+int _GIFixedRays;
+int _GIProbeOffset;       // first probe updated by this dispatch
+int _GIProbeUpdateCount;  // number of probes updated by this dispatch
+int _GITlasNodeCount;
+float4x4 _GIRayRotation;
+float4 _GIHysteresis;     // x base, y large-change, z global boost, w dirty region
+float4 _GIChangeThreshold;// x relative irradiance threshold, y absolute floor, z distance sharpness, w max ray distance (spacing units)
+int _GIDirtyCount;
+float4 _GIDirtyMin[GI_MAX_DIRTY];
+float4 _GIDirtyMax[GI_MAX_DIRTY];
+float _GIRelocationEnabled;
+float _GIFirstFrame;
+
+// ---------------------------------------------------------------------------------------------
+// Ray tracing
+// ---------------------------------------------------------------------------------------------
+float3 SafeInverse(float3 d)
+{
+    return float3(abs(d.x) > 1e-12 ? 1.0 / d.x : 1e12, abs(d.y) > 1e-12 ? 1.0 / d.y : 1e12, abs(d.z) > 1e-12 ? 1.0 / d.z : 1e12);
+}
+
+float RayBox(float3 ro, float3 invDir, float3 bmin, float3 bmax, float tMax)
+{
+    float3 t0 = (bmin - ro) * invDir, t1 = (bmax - ro) * invDir;
+    float3 tmin = min(t0, t1), tmax = max(t0, t1);
+    float tn = max(max(tmin.x, tmin.y), max(tmin.z, 0.0));
+    float tf = min(min(tmax.x, tmax.y), min(tmax.z, tMax));
+    return tn <= tf ? tn : 1e30;
+}
+
+struct GIHit { float t; int instance; int tri; float frontFace; };
+
+// Nearer child is pushed last so it is visited first; missed children are never pushed.
+// (A macro rather than a function: passing the stack array as inout would copy it on every call.)
+#define GI_PUSH_CHILDREN(node, baseIndex, ro, invDir, tMax)                                              \
+{                                                                                                        \
+    GIBvhNode ca = _GINodes[(baseIndex) + node.leftFirst], cb = _GINodes[(baseIndex) + node.leftFirst + 1]; \
+    float ta = RayBox(ro, invDir, ca.bmin, ca.bmax, tMax), tb = RayBox(ro, invDir, cb.bmin, cb.bmax, tMax); \
+    int firstChild = node.leftFirst, secondChild = node.leftFirst + 1;                                  \
+    if (tb < ta) { float tt = ta; ta = tb; tb = tt; firstChild = node.leftFirst + 1; secondChild = node.leftFirst; } \
+    if (tb < 1e29 && sp < GI_STACK) stack[sp++] = secondChild;                                          \
+    if (ta < 1e29 && sp < GI_STACK) stack[sp++] = firstChild;                                           \
+}
+
+// Traverses one BLAS in object space; the ray keeps the world-space parameterisation.
+bool TraceBlas(int inst, float3 ro, float3 rd, inout GIHit hit, bool anyHit, inout int budget)
+{
+    GIInstance instance = _GIInstances[inst];
+    float3 invDir = SafeInverse(rd);
+    GIBvhNode root = _GINodes[instance.nodeOffset];
+    if (RayBox(ro, invDir, root.bmin, root.bmax, hit.t) >= 1e29) return false;
+    int stack[GI_STACK];
+    int sp = 0;
+    stack[sp++] = 0;
+    bool found = false;
+    while (sp > 0 && budget > 0)
+    {
+        budget--;
+        GIBvhNode node = _GINodes[instance.nodeOffset + stack[--sp]];
+        if (node.count > 0)
+        {
+            for (int k = 0; k < node.count; k++)
+            {
+                int ti = instance.triOffset + node.leftFirst + k;
+                GITriangle tri = _GITriangles[ti];
+                float3 p = cross(rd, tri.e2);
+                float det = dot(tri.e1, p);
+                if (abs(det) < 1e-14) continue;
+                float inv = 1.0 / det;
+                float3 s = ro - tri.v0;
+                float u = dot(s, p) * inv;
+                if (u < 0 || u > 1) continue;
+                float3 q = cross(s, tri.e1);
+                float v = dot(rd, q) * inv;
+                if (v < 0 || u + v > 1) continue;
+                float t = dot(tri.e2, q) * inv;
+                if (t > 1e-4 && t < hit.t)
+                {
+                    hit.t = t; hit.instance = inst; hit.tri = ti;
+                    // Unity convention: cross(e1, e2) is the outward (front-face) normal.
+                    hit.frontFace = (dot(cross(tri.e1, tri.e2), rd) * instance.winding < 0) ? 1 : 0;
+                    found = true;
+                    if (anyHit) return true;
+                }
+            }
+        }
+        else GI_PUSH_CHILDREN(node, instance.nodeOffset, ro, invDir, hit.t)
+    }
+    return found;
+}
+
+// Two-level traversal: TLAS over instance bounds (rebuilt per change), cached BLAS per mesh.
+bool TraceScene(float3 ro, float3 rd, float tMax, bool anyHit, out GIHit hit)
+{
+    hit.t = tMax; hit.instance = -1; hit.tri = -1; hit.frontFace = 1;
+    if (_GITlasNodeCount <= 0) return false;
+    float3 invDir = SafeInverse(rd);
+    int stack[GI_STACK];
+    int sp = 0;
+    stack[sp++] = 0;
+    int budget = 6000;   // hard cap: a malformed BVH can never hang the GPU
+    bool found = false;
+    while (sp > 0 && budget > 0)
+    {
+        budget--;
+        GIBvhNode node = _GINodes[stack[--sp]];
+        if (node.count > 0)
+        {
+            for (int k = 0; k < node.count; k++)
+            {
+                int inst = node.leftFirst + k;
+                GIInstance instance = _GIInstances[inst];
+                float3 oro = float3(dot(instance.w2o0, float4(ro, 1)), dot(instance.w2o1, float4(ro, 1)), dot(instance.w2o2, float4(ro, 1)));
+                float3 ord = float3(dot(instance.w2o0.xyz, rd), dot(instance.w2o1.xyz, rd), dot(instance.w2o2.xyz, rd));
+                if (TraceBlas(inst, oro, ord, hit, anyHit, budget))
+                {
+                    found = true;
+                    if (anyHit) return true;
+                }
+            }
+        }
+        else GI_PUSH_CHILDREN(node, 0, ro, invDir, hit.t)
+    }
+    return found;
+}
+
+float3 HitNormal(GIHit hit)
+{
+    GIInstance instance = _GIInstances[hit.instance];
+    GITriangle tri = _GITriangles[hit.tri];
+    float3 n = cross(tri.e1, tri.e2) * instance.winding;
+    // World normal = transpose(W2O) * n_object
+    return normalize(instance.w2o0.xyz * n.x + instance.w2o1.xyz * n.y + instance.w2o2.xyz * n.z);
+}
+
+float3 DirectLighting(float3 p, float3 n)
+{
+    float3 sum = 0;
+    for (int i = 0; i < _GILightCount; i++)
+    {
+        float4 pt = _GILightPosType[i];
+        float3 L; float dist; float atten = 1;
+        if (pt.w < 0.5) { L = pt.xyz; dist = 1e4; }
+        else
+        {
+            float3 d = pt.xyz - p;
+            float d2 = max(dot(d, d), 1e-4);
+            dist = sqrt(d2);
+            L = d / dist;
+            float factor = d2 * _GILightColor[i].w;
+            float smoothF = saturate(1.0 - factor * factor);
+            atten = smoothF * smoothF / d2;      // URP distance attenuation
+            if (pt.w > 1.5)
+            {
+                float cd = dot(_GILightSpot[i].xyz, -L);
+                float s = saturate(cd * _GILightSpotParams[i].x + _GILightSpotParams[i].y);
+                atten *= s * s;
+            }
+        }
+        float ndl = dot(n, L);
+        if (ndl <= 0 || atten <= 1e-7) continue;
+        GIHit sh;
+        if (TraceScene(p + n * 0.01, L, dist - 0.02, true, sh)) continue;
+        sum += _GILightColor[i].rgb * (ndl * atten);
+    }
+    return sum;
+}
+
+float3 RayDirection(int ray)
+{
+    bool fixedRay = ray < _GIFixedRays;
+    const float PHI = 1.6180339887;
+    float n = fixedRay ? _GIFixedRays : (_GIRaysPerProbe - _GIFixedRays);
+    float i = fixedRay ? ray : ray - _GIFixedRays;
+    float phi = 2.0 * GI_PI * frac(i * (PHI - 1.0));
+    float cosTheta = 1.0 - (2.0 * i + 1.0) / n;
+    float sinTheta = sqrt(saturate(1.0 - cosTheta * cosTheta));
+    float3 d = float3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
+    return fixedRay ? d : normalize(mul((float3x3)_GIRayRotation, d));
+}
+
+float3 ProbeWorldPositionRW(int probe)
+{
+    int cascade;
+    float3 p = GIProbeGridPosition(probe, cascade);
+    return p + _GIProbeDataRW[probe].xyz;
+}
+
+[numthreads(64, 1, 1)]
+void TraceProbes(uint3 id : SV_DispatchThreadID)
+{
+    int local = id.x / _GIRaysPerProbe;
+    int ray = id.x % _GIRaysPerProbe;
+    if (local >= _GIProbeUpdateCount) return;
+    int probe = (_GIProbeOffset + local) % _GIProbeTotal;
+    float4 pdata = _GIProbeData[probe];
+    // Probes classified as inside geometry only keep tracing the fixed classification rays.
+    if (pdata.w < 0.5 && ray >= _GIFixedRays) return;
+    float3 dir = RayDirection(ray);
+    int cascade;
+    float3 origin = GIProbeGridPosition(probe, cascade) + pdata.xyz;
+    GIHit hit;
+    float4 result;
+    if (!TraceScene(origin, dir, 1e4, false, hit))
+    {
+        // Escaped every occluder: incoming sky radiance (zero when the sky input is disabled).
+        float3 sky = _GISkyCube.SampleLevel(sampler_GISkyCube, dir, _GISkyMip).rgb * _GISkyIntensity;
+        result = float4(sky, 1e4);
+    }
+    else if (hit.frontFace < 0.5)
+    {
+        result = float4(0, 0, 0, -hit.t);
+    }
+    else
+    {
+        float3 p = origin + dir * hit.t;
+        float3 n = HitNormal(hit);
+        float3 albedo = _GIMaterials[_GIInstances[hit.instance].materialOffset + _GITriangles[hit.tri].material].rgb;
+        float3 direct = DirectLighting(p, n);
+        // Previous-frame probe irradiance at the hit point supplies the further bounces.
+        float3 indirect = _GIBias.w > 0 ? GISampleIrradiance(p, n, -dir) * _GIBias.w : 0;
+        result = float4(albedo * (direct + indirect), hit.t);
+    }
+    _GIRayResults[probe * _GIRaysPerProbe + ray] = result;
+}
+
+// ---------------------------------------------------------------------------------------------
+// Relocation and classification (fixed, unrotated rays)
+// ---------------------------------------------------------------------------------------------
+[numthreads(64, 1, 1)]
+void RelocateProbes(uint3 id : SV_DispatchThreadID)
+{
+    if ((int)id.x >= _GIProbeUpdateCount) return;
+    int probe = (_GIProbeOffset + (int)id.x) % _GIProbeTotal;
+    int cascade = GIProbeCascade(probe);
+    float spacing = _GICascadeOrigin[cascade].w;
+    float4 data = _GIProbeDataRW[probe];
+    float3 offset = data.xyz;
+
+    int backfaces = 0;
+    float closestBack = 1e9, closestFront = 1e9, farthestFront = 0;
+    float3 closestBackDir = 0, closestFrontDir = 0, farthestFrontDir = 0;
+    for (int r = 0; r < _GIFixedRays; r++)
+    {
+        float d = _GIRayResults[probe * _GIRaysPerProbe + r].a;
+        float3 dir = RayDirection(r);
+        if (d < 0)
+        {
+            backfaces++;
+            if (-d < closestBack) { closestBack = -d; closestBackDir = dir; }
+        }
+        else
+        {
+            if (d < closestFront) { closestFront = d; closestFrontDir = dir; }
+            if (d > farthestFront) { farthestFront = d; farthestFrontDir = dir; }
+        }
+    }
+    float backRatio = backfaces / max(1.0, (float)_GIFixedRays);
+    float minFront = 0.15 * spacing;
+    float3 full = offset;
+    if (_GIRelocationEnabled > 0.5)
+    {
+        if (backRatio > 0.25)
+            full = offset + closestBackDir * (closestBack + minFront * 0.5);
+        else if (closestFront < minFront)
+        {
+            if (dot(closestFrontDir, farthestFrontDir) <= 0)
+                full = offset + farthestFrontDir * min(farthestFront, minFront);
+        }
+        else if (closestFront > minFront * 2.0 && dot(offset, offset) > 1e-6)
+            full = offset * 0.75;   // relax towards the grid point when there is room
+        float limit = 0.45 * spacing;
+        if (any(abs(full) > limit)) full = offset;
+    }
+    else full = 0;
+    _GIProbeDataRW[probe] = float4(full, backRatio > 0.25 ? 0.0 : 1.0);
+}
+
+// ---------------------------------------------------------------------------------------------
+// Temporal blending
+// ---------------------------------------------------------------------------------------------
+groupshared float4 gsRay[GI_MAX_RAYS];
+groupshared float3 gsDir[GI_MAX_RAYS];
+
+float ProbeHysteresis(float3 probePos)
+{
+    float h = min(_GIHysteresis.x, _GIHysteresis.z);
+    for (int i = 0; i < _GIDirtyCount; i++)
+        if (all(probePos >= _GIDirtyMin[i].xyz) && all(probePos <= _GIDirtyMax[i].xyz)) h = min(h, _GIHysteresis.w);
+    return _GIFirstFrame > 0.5 ? 0.0 : h;
+}
+
+void LoadRays(int probe, uint gi, uint groupSize)
+{
+    for (uint r = gi; r < (uint)_GIRaysPerProbe; r += groupSize)
+    {
+        gsRay[r] = _GIRayResults[probe * _GIRaysPerProbe + r];
+        gsDir[r] = RayDirection(r);
+    }
+    GroupMemoryBarrierWithGroupSync();
+}
+
+[numthreads(GI_IRR_INNER, GI_IRR_INNER, 1)]
+void BlendIrradiance(uint3 gid : SV_GroupID, uint3 gtid : SV_GroupThreadID, uint gi : SV_GroupIndex)
+{
+    int probe = (_GIProbeOffset + (int)gid.x) % _GIProbeTotal;
+    bool inactive = _GIProbeDataRW[probe].w < 0.5;
+    LoadRays(probe, gi, GI_IRR_INNER * GI_IRR_INNER);
+    if (inactive) return;   // inactive: keep history (not used for shading)
+    float3 texelDir = GIOctDecode(((gtid.xy + 0.5) / GI_IRR_INNER) * 2.0 - 1.0);
+    float3 sum = 0; float wsum = 0;
+    for (int r = _GIFixedRays; r < _GIRaysPerProbe; r++)
+    {
+        float w = max(0.0, dot(texelDir, gsDir[r]));
+        sum += gsRay[r].rgb * w;
+        wsum += w;
+    }
+    float3 value = wsum > 1e-5 ? sum / wsum : 0;
+    int2 tile = int2(probe % _GITilesPerRow, probe / _GITilesPerRow);
+    int2 texel = tile * GI_IRR_TILE + 1 + gtid.xy;
+    float3 old = _GIIrradianceRW[texel].rgb;
+    float h = ProbeHysteresis(ProbeWorldPositionRW(probe));
+    // Large-change detection: drop history quickly when the incident light changed strongly.
+    float3 delta = abs(value - old);
+    float scale = max(max(max(value.r, value.g), value.b), max(max(old.r, old.g), old.b));
+    if (max(max(delta.r, delta.g), delta.b) > scale * _GIChangeThreshold.x + _GIChangeThreshold.y) h = min(h, _GIHysteresis.y);
+    _GIIrradianceRW[texel] = float4(lerp(value, old, h), 1);
+}
+
+[numthreads(GI_DIST_INNER, GI_DIST_INNER, 1)]
+void BlendDistance(uint3 gid : SV_GroupID, uint3 gtid : SV_GroupThreadID, uint gi : SV_GroupIndex)
+{
+    int probe = (_GIProbeOffset + (int)gid.x) % _GIProbeTotal;
+    bool inactive = _GIProbeDataRW[probe].w < 0.5;
+    LoadRays(probe, gi, GI_DIST_INNER * GI_DIST_INNER);
+    if (inactive) return;
+    int cascade = GIProbeCascade(probe);
+    float maxDist = _GICascadeOrigin[cascade].w * _GIChangeThreshold.w;
+    float3 texelDir = GIOctDecode(((gtid.xy + 0.5) / GI_DIST_INNER) * 2.0 - 1.0);
+    float2 sum = 0; float wsum = 0;
+    for (int r = _GIFixedRays; r < _GIRaysPerProbe; r++)
+    {
+        float w = pow(max(0.0, dot(texelDir, gsDir[r])), _GIChangeThreshold.z);
+        float d = min(abs(gsRay[r].a), maxDist);
+        sum += float2(d, d * d) * w;
+        wsum += w;
+    }
+    float2 value = wsum > 1e-5 ? sum / wsum : float2(maxDist, maxDist * maxDist);
+    int2 tile = int2(probe % _GITilesPerRow, probe / _GITilesPerRow);
+    int2 texel = tile * GI_DIST_TILE + 1 + gtid.xy;
+    float2 old = _GIDistanceRW[texel];
+    float h = ProbeHysteresis(ProbeWorldPositionRW(probe));
+    // Geometry appearing or disappearing changes the mean distance strongly; follow it quickly
+    // (only inside a change window, x < 1e5, so steady-state noise cannot shorten the history).
+    if (_GIChangeThreshold.x < 1e5 && abs(value.x - old.x) > 0.2 * maxDist) h = min(h, _GIHysteresis.y);
+    _GIDistanceRW[texel] = lerp(value, old, h);
+}
+
+int2 BorderSource(int2 t, int size)
+{
+    int last = size - 1;
+    bool cx = t.x == 0 || t.x == last, cy = t.y == 0 || t.y == last;
+    if (cx && cy) return int2(t.x == 0 ? size - 2 : 1, t.y == 0 ? size - 2 : 1);
+    if (cy) return int2(last - t.x, t.y == 0 ? 1 : size - 2);
+    if (cx) return int2(t.x == 0 ? 1 : size - 2, last - t.y);
+    return t;
+}
+
+[numthreads(GI_IRR_TILE, GI_IRR_TILE, 1)]
+void BorderIrradiance(uint3 gid : SV_GroupID, uint3 gtid : SV_GroupThreadID)
+{
+    int probe = (_GIProbeOffset + (int)gid.x) % _GIProbeTotal;
+    int2 t = gtid.xy;
+    int2 src = BorderSource(t, GI_IRR_TILE);
+    if (all(src == t)) return;
+    int2 tile = int2(probe % _GITilesPerRow, probe / _GITilesPerRow) * GI_IRR_TILE;
+    _GIIrradianceRW[tile + t] = _GIIrradianceRW[tile + src];
+}
+
+[numthreads(GI_DIST_TILE, GI_DIST_TILE, 1)]
+void BorderDistance(uint3 gid : SV_GroupID, uint3 gtid : SV_GroupThreadID)
+{
+    int probe = (_GIProbeOffset + (int)gid.x) % _GIProbeTotal;
+    int2 t = gtid.xy;
+    int2 src = BorderSource(t, GI_DIST_TILE);
+    if (all(src == t)) return;
+    int2 tile = int2(probe % _GITilesPerRow, probe / _GITilesPerRow) * GI_DIST_TILE;
+    _GIDistanceRW[tile + t] = _GIDistanceRW[tile + src];
+}
+
+[numthreads(64, 1, 1)]
+void ResetProbes(uint3 id : SV_DispatchThreadID)
+{
+    if ((int)id.x >= _GIProbeTotal) return;
+    _GIProbeDataRW[id.x] = float4(0, 0, 0, 1);
+}
+
+// ---------------------------------------------------------------------------------------------
+// Diagnostics: sample the probe field at arbitrary points (receiver probes, convergence logging)
+// ---------------------------------------------------------------------------------------------
+#pragma kernel SamplePoints
+StructuredBuffer<float4> _GISamplePos;     // xyz position
+StructuredBuffer<float4> _GISampleNormal;  // xyz normal
+RWStructuredBuffer<float4> _GISampleOut;
+int _GISampleCount;
+
+[numthreads(64, 1, 1)]
+void SamplePoints(uint3 id : SV_DispatchThreadID)
+{
+    if ((int)id.x >= _GISampleCount) return;
+    float3 n = normalize(_GISampleNormal[id.x].xyz);
+    _GISampleOut[id.x] = float4(GISampleIrradiance(_GISamplePos[id.x].xyz, n, n), 1);
+}

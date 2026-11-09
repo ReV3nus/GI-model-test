@@ -1,0 +1,114 @@
+Unity 6000.5.4f1 | NVIDIA GeForce RTX 4080 Laptop GPU | Direct3D12 | CPU 13th Gen Intel(R) Core(TM) i9-13980HX
+Capture 1920x1080, settle 4s, targetFrameRate 30, vSync 0
+GI probes 16196, rays/probe 128, fixed rays 32, cascades 33x11x28@0.4m | 29x8x26@1m
+  capture A_step1_first: mean8bit GI 0.08 off -1.00 indirect -1.00 (frame 344)
+  capture A_step1: mean8bit GI 0.02 off 0.00 indirect 0.02 (frame 462)
+A_step1: final [0.00017, 0.00003, 0.00003, 0.00003, 0.00000, 0.00002] | first response Direct_Control:115 Room_A_Indirect:-1 Room_B_Indirect:-1 Roof_Direct_Control:-1 Rear_Alcove:-1 Under_Bench:-1  | settle Direct_Control:3/0.17s Room_A_Indirect:1/0.13s Room_B_Indirect:1/0.13s Roof_Direct_Control:1/0.13s Rear_Alcove:1/0.13s Under_Bench:1/0.13s 
+  capture A_step2_first: mean8bit GI 1.55 off -1.00 indirect -1.00 (frame 463)
+  capture A_step2: mean8bit GI 3.63 off 0.97 indirect 3.55 (frame 582)
+A_step2: final [0.02144, 0.00442, 0.00000, 0.00071, 0.00000, 0.00009] | first response Direct_Control:4 Room_A_Indirect:4 Room_B_Indirect:-1 Roof_Direct_Control:4 Rear_Alcove:-1 Under_Bench:-1  | settle Direct_Control:48/1.62s Room_A_Indirect:118/3.95s Room_B_Indirect:1/0.08s Roof_Direct_Control:58/1.95s Rear_Alcove:1/0.08s Under_Bench:1/0.08s 
+  capture A_step3_first: mean8bit GI 8.09 off -1.00 indirect -1.00 (frame 583)
+  capture A_step3: mean8bit GI 11.62 off 4.06 indirect 10.81 (frame 702)
+A_step3: final [0.06163, 0.01900, 0.00000, 0.00298, 0.00000, 0.00195] | first response Direct_Control:4 Room_A_Indirect:4 Room_B_Indirect:-1 Roof_Direct_Control:6 Rear_Alcove:-1 Under_Bench:14  | settle Direct_Control:48/1.63s Room_A_Indirect:112/3.76s Room_B_Indirect:1/0.10s Roof_Direct_Control:108/3.63s Rear_Alcove:1/0.10s Under_Bench:78/2.63s 
+  capture A_step4_first: mean8bit GI 11.03 off -1.00 indirect -1.00 (frame 703)
+  capture A_step4: mean8bit GI 10.80 off 4.06 indirect 9.99 (frame 821)
+A_step4: final [0.05903, 0.01771, 0.00024, 0.00285, 0.00002, 0.00207] | first response Direct_Control:4 Room_A_Indirect:2 Room_B_Indirect:4 Roof_Direct_Control:6 Rear_Alcove:-1 Under_Bench:10  | settle Direct_Control:116/3.91s Room_A_Indirect:116/3.91s Room_B_Indirect:34/1.17s Roof_Direct_Control:98/3.31s Rear_Alcove:1/0.11s Under_Bench:102/3.44s 
+  capture A_step5_first: mean8bit GI 13.28 off -1.00 indirect -1.00 (frame 822)
+  capture A_step5: mean8bit GI 15.13 off 5.13 indirect 14.32 (frame 940)
+A_step5: final [0.06845, 0.02633, 0.00050, 0.02052, 0.00001, 0.00113] | first response Direct_Control:5 Room_A_Indirect:3 Room_B_Indirect:9 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:7  | settle Direct_Control:89/3.01s Room_A_Indirect:115/3.88s Room_B_Indirect:55/1.88s Roof_Direct_Control:59/2.01s Rear_Alcove:1/0.11s Under_Bench:103/3.48s 
+  capture A_step6_first: mean8bit GI 30.24 off -1.00 indirect -1.00 (frame 941)
+  capture A_step6: mean8bit GI 34.45 off 17.52 indirect 29.52 (frame 1059)
+A_step6: final [0.09105, 0.04745, 0.01956, 0.05066, 0.00045, 0.00295] | first response Direct_Control:6 Room_A_Indirect:4 Room_B_Indirect:4 Roof_Direct_Control:4 Rear_Alcove:4 Under_Bench:4  | settle Direct_Control:46/1.60s Room_A_Indirect:110/3.73s Room_B_Indirect:48/1.66s Roof_Direct_Control:66/2.26s Rear_Alcove:52/1.79s Under_Bench:76/2.60s 
+  capture A_step7_first: mean8bit GI 12.25 off -1.00 indirect -1.00 (frame 1060)
+  capture A_step7: mean8bit GI 0.00 off 0.00 indirect 0.00 (frame 1178)
+A_step7: final [0.00000, 0.00001, 0.00001, 0.00001, 0.00000, 0.00019] | first response Direct_Control:3 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:5 Under_Bench:5  | settle Direct_Control:11/0.43s Room_A_Indirect:9/0.36s Room_B_Indirect:9/0.36s Roof_Direct_Control:7/0.29s Rear_Alcove:5/0.22s Under_Bench:45/1.56s 
+  capture A2_lamps_step1_first: mean8bit GI 14.02 off -1.00 indirect -1.00 (frame 1300)
+  capture A2_lamps_step1: mean8bit GI 13.92 off 9.79 indirect 5.77 (frame 1416)
+A2_lamps_step1: final [0.00922, 0.00559, 0.00440, 0.01158, 0.00004, 0.00023] | first response Direct_Control:7 Room_A_Indirect:3 Room_B_Indirect:13 Roof_Direct_Control:1 Rear_Alcove:-1 Under_Bench:-1  | settle Direct_Control:111/3.80s Room_A_Indirect:115/3.94s Room_B_Indirect:103/3.54s Roof_Direct_Control:-1/-1.00s Rear_Alcove:1/0.17s Under_Bench:1/0.17s 
+  capture A2_lamps_step2: mean8bit GI 16.40 off 10.61 indirect 8.76 (frame 1537)
+A2_lamps_step2: final [0.02971, 0.01137, 0.00443, 0.01187, 0.00005, 0.00134] | first response Direct_Control:6 Room_A_Indirect:4 Room_B_Indirect:6 Roof_Direct_Control:8 Rear_Alcove:-1 Under_Bench:12  | settle Direct_Control:46/1.50s Room_A_Indirect:120/3.97s Room_B_Indirect:110/3.64s Roof_Direct_Control:120/3.97s Rear_Alcove:1/0.00s Under_Bench:100/3.30s 
+  capture A2_lamps_step3: mean8bit GI 22.41 off 13.39 indirect 15.05 (frame 1658)
+A2_lamps_step3: final [0.06533, 0.02407, 0.00394, 0.01293, 0.00005, 0.00160] | first response Direct_Control:5 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:15  | settle Direct_Control:45/1.47s Room_A_Indirect:109/3.60s Room_B_Indirect:47/1.54s Roof_Direct_Control:-1/-1.00s Rear_Alcove:1/0.01s Under_Bench:87/2.87s 
+  capture A2_lamps_step4_first: mean8bit GI 22.90 off -1.00 indirect -1.00 (frame 1659)
+  capture A2_lamps_step4: mean8bit GI 22.52 off 13.91 indirect 14.70 (frame 1777)
+A2_lamps_step4: final [0.06771, 0.02419, 0.00416, 0.01375, 0.00006, 0.00179] | first response Direct_Control:4 Room_A_Indirect:4 Room_B_Indirect:4 Roof_Direct_Control:4 Rear_Alcove:-1 Under_Bench:10  | settle Direct_Control:112/3.79s Room_A_Indirect:118/3.99s Room_B_Indirect:94/3.19s Roof_Direct_Control:118/3.99s Rear_Alcove:1/0.13s Under_Bench:46/1.59s 
+  capture A2_lamps_step5: mean8bit GI 25.68 off 14.89 indirect 18.44 (frame 1898)
+A2_lamps_step5: final [0.07977, 0.03224, 0.00429, 0.03138, 0.00005, 0.00143] | first response Direct_Control:6 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:8  | settle Direct_Control:110/3.64s Room_A_Indirect:112/3.70s Room_B_Indirect:106/3.50s Roof_Direct_Control:80/2.64s Rear_Alcove:1/0.01s Under_Bench:94/3.10s 
+  capture A2_lamps_step6: mean8bit GI 41.60 off 26.13 indirect 32.09 (frame 2019)
+A2_lamps_step6: final [0.09480, 0.05449, 0.02429, 0.06239, 0.00043, 0.00268] | first response Direct_Control:1 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:3 Under_Bench:9  | settle Direct_Control:49/1.61s Room_A_Indirect:115/3.81s Room_B_Indirect:103/3.41s Roof_Direct_Control:67/2.21s Rear_Alcove:49/1.61s Under_Bench:97/3.21s 
+  capture A2_lamps_step7_first: mean8bit GI 21.91 off -1.00 indirect -1.00 (frame 2020)
+  capture A2_lamps_step7: mean8bit GI 13.88 off 9.79 indirect 5.69 (frame 2137)
+A2_lamps_step7: final [0.00684, 0.00490, 0.00445, 0.01132, 0.00004, 0.00042] | first response Direct_Control:4 Room_A_Indirect:4 Room_B_Indirect:4 Roof_Direct_Control:4 Rear_Alcove:6 Under_Bench:4  | settle Direct_Control:44/1.54s Room_A_Indirect:18/0.67s Room_B_Indirect:86/2.94s Roof_Direct_Control:48/1.67s Rear_Alcove:4/0.21s Under_Bench:44/1.54s 
+  capture B_step2_blocked_first: mean8bit GI 2.26 off -1.00 indirect -1.00 (frame 2259)
+  capture B_step2_blocked: mean8bit GI 0.03 off 0.00 indirect 0.03 (frame 2376)
+B_step2_blocked: final [0.00014, 0.00003, 0.00001, 0.00004, 0.00001, 0.00010] | first response Direct_Control:5 Room_A_Indirect:3 Room_B_Indirect:-1 Roof_Direct_Control:7 Rear_Alcove:-1 Under_Bench:13  | settle Direct_Control:17/0.64s Room_A_Indirect:23/0.84s Room_B_Indirect:1/0.14s Roof_Direct_Control:19/0.70s Rear_Alcove:1/0.14s Under_Bench:33/1.17s 
+  capture B_step2_unblocked_first: mean8bit GI 2.07 off -1.00 indirect -1.00 (frame 2377)
+  capture B_step2_unblocked: mean8bit GI 3.64 off 0.97 indirect 3.57 (frame 2496)
+B_step2_unblocked: final [0.02313, 0.00489, 0.00000, 0.00062, 0.00000, 0.00081] | first response Direct_Control:7 Room_A_Indirect:5 Room_B_Indirect:-1 Roof_Direct_Control:5 Rear_Alcove:-1 Under_Bench:39  | settle Direct_Control:59/1.97s Room_A_Indirect:117/3.91s Room_B_Indirect:1/0.07s Roof_Direct_Control:77/2.58s Rear_Alcove:1/0.07s Under_Bench:75/2.51s 
+  capture B_step3_blocked_first: mean8bit GI 5.55 off -1.00 indirect -1.00 (frame 2618)
+  capture B_step3_blocked: mean8bit GI 0.11 off 0.00 indirect 0.11 (frame 2735)
+B_step3_blocked: final [0.00019, 0.00007, 0.00000, 0.00009, 0.00000, 0.00008] | first response Direct_Control:6 Room_A_Indirect:2 Room_B_Indirect:-1 Roof_Direct_Control:2 Rear_Alcove:-1 Under_Bench:10  | settle Direct_Control:18/0.68s Room_A_Indirect:20/0.75s Room_B_Indirect:1/0.14s Roof_Direct_Control:34/1.21s Rear_Alcove:1/0.14s Under_Bench:30/1.08s 
+  capture B_step3_unblocked_first: mean8bit GI 6.55 off -1.00 indirect -1.00 (frame 2736)
+  capture B_step3_unblocked: mean8bit GI 11.47 off 4.06 indirect 10.66 (frame 2855)
+B_step3_unblocked: final [0.06224, 0.01833, 0.00000, 0.00315, 0.00000, 0.00132] | first response Direct_Control:4 Room_A_Indirect:4 Room_B_Indirect:-1 Roof_Direct_Control:4 Rear_Alcove:-1 Under_Bench:8  | settle Direct_Control:12/0.43s Room_A_Indirect:76/2.56s Room_B_Indirect:1/0.09s Roof_Direct_Control:68/2.29s Rear_Alcove:1/0.09s Under_Bench:36/1.23s 
+  capture B_step4_blocked_first: mean8bit GI 4.14 off -1.00 indirect -1.00 (frame 2977)
+  capture B_step4_blocked: mean8bit GI 0.06 off 0.00 indirect 0.06 (frame 3094)
+B_step4_blocked: final [0.00020, 0.00005, 0.00001, 0.00008, 0.00000, 0.00014] | first response Direct_Control:3 Room_A_Indirect:3 Room_B_Indirect:13 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:7  | settle Direct_Control:15/0.58s Room_A_Indirect:17/0.64s Room_B_Indirect:7/0.31s Roof_Direct_Control:33/1.18s Rear_Alcove:1/0.14s Under_Bench:39/1.38s 
+  capture B_step4_unblocked_first: mean8bit GI 6.35 off -1.00 indirect -1.00 (frame 3095)
+  capture B_step4_unblocked: mean8bit GI 10.81 off 4.06 indirect 10.00 (frame 3214)
+B_step4_unblocked: final [0.05944, 0.01688, 0.00032, 0.00274, 0.00001, 0.00173] | first response Direct_Control:5 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:5 Rear_Alcove:-1 Under_Bench:5  | settle Direct_Control:13/0.45s Room_A_Indirect:111/3.71s Room_B_Indirect:41/1.38s Roof_Direct_Control:105/3.51s Rear_Alcove:1/0.08s Under_Bench:69/2.31s 
+  capture C_step4_SunOnly_lampsOff_first: mean8bit GI 9.70 off -1.00 indirect -1.00 (frame 3337)
+  capture C_step4_SunOnly_lampsOff: mean8bit GI 7.93 off 4.06 indirect 6.87 (frame 3454)
+C_step4_SunOnly_lampsOff: final [0.00955, 0.00847, 0.00015, 0.00097, 0.00000, 0.00018] | first response Direct_Control:3 Room_A_Indirect:3 Room_B_Indirect:-1 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:3  | settle Direct_Control:23/0.85s Room_A_Indirect:109/3.71s Room_B_Indirect:1/0.15s Roof_Direct_Control:31/1.11s Rear_Alcove:1/0.15s Under_Bench:39/1.38s 
+  capture C_step4_SunOnly_lampsOn_first: mean8bit GI 17.72 off -1.00 indirect -1.00 (frame 3455)
+  capture C_step4_SunOnly_lampsOn: mean8bit GI 20.23 off 13.91 indirect 11.75 (frame 3573)
+C_step4_SunOnly_lampsOn: final [0.01363, 0.01246, 0.00451, 0.01169, 0.00005, 0.00029] | first response Direct_Control:5 Room_A_Indirect:1 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:-1  | settle Direct_Control:101/3.41s Room_A_Indirect:117/3.94s Room_B_Indirect:111/3.74s Roof_Direct_Control:107/3.61s Rear_Alcove:1/0.11s Under_Bench:1/0.11s 
+  capture C_step4_SkyOnly_lampsOff_first: mean8bit GI 10.51 off -1.00 indirect -1.00 (frame 3574)
+  capture C_step4_SkyOnly_lampsOff: mean8bit GI 6.59 off 2.91 indirect 6.59 (frame 3693)
+C_step4_SkyOnly_lampsOff: final [0.05221, 0.01165, 0.00028, 0.00191, 0.00001, 0.00177] | first response Direct_Control:6 Room_A_Indirect:4 Room_B_Indirect:4 Roof_Direct_Control:4 Rear_Alcove:-1 Under_Bench:6  | settle Direct_Control:42/1.43s Room_A_Indirect:-1/-1.00s Room_B_Indirect:52/1.77s Roof_Direct_Control:60/2.03s Rear_Alcove:1/0.10s Under_Bench:106/3.56s 
+  capture C_step4_SkyOnly_lampsOn_first: mean8bit GI 17.05 off -1.00 indirect -1.00 (frame 3694)
+  capture C_step4_SkyOnly_lampsOn: mean8bit GI 19.48 off 12.80 indirect 11.84 (frame 3810)
+C_step4_SkyOnly_lampsOn: final [0.05531, 0.01738, 0.00404, 0.01309, 0.00005, 0.00274] | first response Direct_Control:6 Room_A_Indirect:4 Room_B_Indirect:4 Roof_Direct_Control:4 Rear_Alcove:-1 Under_Bench:10  | settle Direct_Control:110/3.78s Room_A_Indirect:116/3.98s Room_B_Indirect:98/3.38s Roof_Direct_Control:90/3.11s Rear_Alcove:1/0.18s Under_Bench:102/3.51s 
+  capture C_step4_SunAndSky_lampsOff_first: mean8bit GI 12.40 off -1.00 indirect -1.00 (frame 3811)
+  capture C_step4_SunAndSky_lampsOff: mean8bit GI 10.77 off 4.06 indirect 9.96 (frame 3930)
+C_step4_SunAndSky_lampsOff: final [0.05985, 0.01767, 0.00031, 0.00282, 0.00002, 0.00140] | first response Direct_Control:9 Room_A_Indirect:1 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:5  | settle Direct_Control:97/3.26s Room_A_Indirect:119/4.00s Room_B_Indirect:61/2.06s Roof_Direct_Control:55/1.86s Rear_Alcove:1/0.10s Under_Bench:45/1.53s 
+  capture C_step4_SunAndSky_lampsOn_first: mean8bit GI 19.81 off -1.00 indirect -1.00 (frame 3931)
+  capture C_step4_SunAndSky_lampsOn: mean8bit GI 22.73 off 13.91 indirect 14.90 (frame 4049)
+C_step4_SunAndSky_lampsOn: final [0.06485, 0.02582, 0.00436, 0.01276, 0.00005, 0.00188] | first response Direct_Control:5 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:13  | settle Direct_Control:109/3.68s Room_A_Indirect:113/3.81s Room_B_Indirect:111/3.74s Roof_Direct_Control:107/3.61s Rear_Alcove:1/0.11s Under_Bench:45/1.54s 
+  capture D_step6_view0: mean8bit GI 34.38 off 17.52 indirect 29.45 (frame 4203)
+  capture D_step6_view1: mean8bit GI 18.89 off 4.14 indirect 15.80 (frame 4236)
+  capture D_step6_view2: mean8bit GI 38.44 off 19.89 indirect 36.05 (frame 4268)
+  capture D_step6_view3: mean8bit GI 25.17 off 2.18 indirect 23.74 (frame 4300)
+  capture D_step6_view4: mean8bit GI 26.34 off 6.82 indirect 20.78 (frame 4332)
+  capture D_step6_view5: mean8bit GI 106.20 off 100.41 indirect 90.85 (frame 4364)
+Temporal noise step3 (90 frames): Direct_Control: mean 0.0598 sd 0.00010 (0.17%); Room_A_Indirect: mean 0.0171 sd 0.00046 (2.72%); Room_B_Indirect: mean 0.0000 sd 0.00000 (0.00%); Roof_Direct_Control: mean 0.0030 sd 0.00007 (2.18%); Rear_Alcove: mean 0.0000 sd 0.00000 (0.00%); Under_Bench: mean 0.0014 sd 0.00012 (8.71%); 
+  capture E_sealed_reference: mean8bit GI 0.06 off 0.00 indirect -1.00 (frame 4696)
+  capture E_restored_after_step6: mean8bit GI 0.00 off 0.00 indirect -1.00 (frame 4938)
+  capture G1_move_occluder_unpublished_first: mean8bit GI 4.47 off -1.00 indirect -1.00 (frame 5061)
+  capture G1_move_occluder_unpublished: mean8bit GI 4.75 off 0.55 indirect 4.30 (frame 5179)
+G1_move_occluder_unpublished: final [0.06625, 0.02401, 0.00400, 0.01370, 0.00006, 0.00214] | first response Direct_Control:3 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:1 Rear_Alcove:-1 Under_Bench:3  | settle Direct_Control:115/3.89s Room_A_Indirect:-1/-1.00s Room_B_Indirect:117/3.96s Roof_Direct_Control:117/3.96s Rear_Alcove:1/0.13s Under_Bench:47/1.63s 
+  capture G1_move_occluder_back: mean8bit GI 7.77 off 0.56 indirect 7.34 (frame 5300)
+G1_move_occluder_back: final [0.06645, 0.02324, 0.00446, 0.01367, 0.00005, 0.00236] | first response Direct_Control:4 Room_A_Indirect:2 Room_B_Indirect:4 Roof_Direct_Control:2 Rear_Alcove:-1 Under_Bench:4  | settle Direct_Control:116/3.83s Room_A_Indirect:118/3.90s Room_B_Indirect:110/3.63s Roof_Direct_Control:118/3.90s Rear_Alcove:1/0.00s Under_Bench:80/2.63s 
+  capture G2_add_red_panel_first: mean8bit GI 6.36 off -1.00 indirect -1.00 (frame 5301)
+  capture G2_add_red_panel: mean8bit GI 7.03 off 0.97 indirect 6.34 (frame 5420)
+G2_add_red_panel: final [0.06787, 0.02359, 0.00064, 0.01334, 0.00005, 0.00204] | first response Direct_Control:7 Room_A_Indirect:1 Room_B_Indirect:7 Roof_Direct_Control:1 Rear_Alcove:-1 Under_Bench:7  | settle Direct_Control:107/3.58s Room_A_Indirect:117/3.91s Room_B_Indirect:43/1.45s Roof_Direct_Control:115/3.85s Rear_Alcove:1/0.08s Under_Bench:51/1.71s 
+  capture G2_remove_red_panel_first: mean8bit GI 6.76 off -1.00 indirect -1.00 (frame 5421)
+  capture G2_remove_red_panel: mean8bit GI 7.87 off 0.56 indirect 7.43 (frame 5540)
+G2_remove_red_panel: final [0.06477, 0.02197, 0.00417, 0.01270, 0.00006, 0.00325] | first response Direct_Control:7 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:3 Rear_Alcove:-1 Under_Bench:3  | settle Direct_Control:75/2.51s Room_A_Indirect:109/3.64s Room_B_Indirect:109/3.64s Roof_Direct_Control:113/3.77s Rear_Alcove:1/0.07s Under_Bench:111/3.71s 
+  capture G3_deform_mesh_in_place_first: mean8bit GI 5.18 off -1.00 indirect -1.00 (frame 5572)
+  capture G3_deform_mesh_in_place: mean8bit GI 5.49 off 0.55 indirect 5.04 (frame 5690)
+G3_deform_mesh_in_place: final [0.06716, 0.02351, 0.00083, 0.01426, 0.00005, 0.00204] | first response Direct_Control:4 Room_A_Indirect:2 Room_B_Indirect:2 Roof_Direct_Control:2 Rear_Alcove:-1 Under_Bench:8  | settle Direct_Control:104/3.53s Room_A_Indirect:116/3.93s Room_B_Indirect:26/0.93s Roof_Direct_Control:116/3.93s Rear_Alcove:1/0.13s Under_Bench:100/3.40s 
+  capture G3_restore_original_mesh: mean8bit GI 7.73 off 0.56 indirect 7.29 (frame 5811)
+G3_restore_original_mesh: final [0.06470, 0.02324, 0.00452, 0.01332, 0.00006, 0.00299] | first response Direct_Control:5 Room_A_Indirect:3 Room_B_Indirect:3 Roof_Direct_Control:1 Rear_Alcove:-1 Under_Bench:5  | settle Direct_Control:109/3.60s Room_A_Indirect:-1/-1.00s Room_B_Indirect:115/3.80s Roof_Direct_Control:-1/-1.00s Rear_Alcove:1/0.00s Under_Bench:97/3.20s 
+Performance: main camera rendered to 1920x1080 RT, targetFrameRate -1, vSync 0 (editor Play mode, Game view also drawn)
+perf step1 GI ON : frame 5.83 ms (p95 6.77) | FTM gpu 1.27 cpu 5.84 | GI gpu probe 2.88 albedo 0.12 composite 0.30 | GI cpu 0.70
+perf step1 GI OFF: frame 5.43 ms (p95 6.30) | FTM gpu 1.27 cpu 5.43 | GI gpu probe 0.00 albedo 0.00 composite 0.00 | GI cpu 0.00
+perf step1 GI ON : frame 5.81 ms (p95 6.95) | FTM gpu 1.26 cpu 5.81 | GI gpu probe 2.88 albedo 0.12 composite 0.30 | GI cpu 0.70
+perf step4 GI ON : frame 5.92 ms (p95 6.92) | FTM gpu 1.27 cpu 5.91 | GI gpu probe 3.28 albedo 0.12 composite 0.30 | GI cpu 0.72
+perf step4 GI OFF: frame 5.37 ms (p95 6.43) | FTM gpu 1.30 cpu 5.37 | GI gpu probe 0.00 albedo 0.00 composite 0.00 | GI cpu 0.00
+perf step4 GI ON : frame 5.84 ms (p95 6.81) | FTM gpu 1.26 cpu 5.83 | GI gpu probe 3.28 albedo 0.12 composite 0.30 | GI cpu 0.71
+perf step6 GI ON : frame 5.91 ms (p95 6.95) | FTM gpu 1.26 cpu 5.91 | GI gpu probe 3.81 albedo 0.11 composite 0.30 | GI cpu 0.73
+perf step6 GI OFF: frame 5.63 ms (p95 6.56) | FTM gpu 1.32 cpu 5.64 | GI gpu probe 0.00 albedo 0.00 composite 0.00 | GI cpu 0.00
+perf step6 GI ON : frame 5.96 ms (p95 6.92) | FTM gpu 1.27 cpu 5.96 | GI gpu probe 3.78 albedo 0.11 composite 0.29 | GI cpu 0.74
+Scene rebuild cost on change: step1:3.90ms step2:4.35ms step3:4.03ms step4:4.03ms step5:5.15ms step6:5.21ms step7:3.84ms blockerOn:3.51ms 
+Scene: instances 239, scene triangles 15152, unique BLAS 13 (4752 tris), BVH nodes 5630, probe GPU memory 64.6 MiB

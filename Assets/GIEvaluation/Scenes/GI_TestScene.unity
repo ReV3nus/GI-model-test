@@ -29450,6 +29450,84 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960568900}
   m_Mesh: {fileID: 4300000, guid: 0a5ade0469967e14590064f78c2c7805, type: 2}
+--- !u!1 &1961308641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961308643}
+  - component: {fileID: 1961308642}
+  m_Layer: 0
+  m_Name: Dynamic GI System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1961308642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961308641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c59d54fbb83565478675235ea95322e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicGI.DynamicGISystem
+  giEnabled: 1
+  debugView: 0
+  indirectIntensity: 1
+  showPanel: 1
+  cascades:
+  - origin: {x: -6.3, y: -0.05, z: -0.45}
+    spacing: 0.4
+    counts: {x: 33, y: 11, z: 28}
+  - origin: {x: -14, y: -0.6, z: -13}
+    spacing: 1
+    counts: {x: 29, y: 8, z: 26}
+  raysPerProbe: 128
+  fixedRays: 32
+  probeUpdateFraction: 1
+  probeRelocation: 1
+  skyMip: 1
+  bounceEnergy: 1
+  hysteresis: 0.97
+  largeChangeHysteresis: 0.55
+  globalBoostHysteresis: 0.85
+  dirtyRegionHysteresis: 0.3
+  boostFrames: 45
+  dirtyRegionPadding: 2.5
+  changeThreshold: 0.3
+  clearHistoryOnSceneReset: 0
+  normalBias: 0.25
+  viewBias: 0.1
+  chebyshevPower: 3
+  layers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  rescanInterval: 0.5
+  fallbackSky: {fileID: 0}
+  fallbackSkyIntensity: 0
+--- !u!4 &1961308643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961308641}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1962181759
 GameObject:
   m_ObjectHideFlags: 0
@@ -31688,3 +31766,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 876613775}
+  - {fileID: 1961308643}
