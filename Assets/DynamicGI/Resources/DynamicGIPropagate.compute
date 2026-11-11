@@ -1,0 +1,120 @@
+#pragma kernel Propagate
+#pragma kernel BlurIndirect
+#pragma kernel BlurSky
+
+#include "DynamicGICommon.hlsl"
+
+Texture3D<float4> _SourceTex;
+Texture3D<float4> _IndirectRead;
+RWTexture3D<float4> _IndirectWrite;
+Texture3D<float4> _SkyRead;
+RWTexture3D<float4> _SkyWrite;
+
+int   _DirectionCount;
+float _RayStart;
+float _MaxTraceDistance;
+
+// One diffuse bounce. Each surface voxel's outgoing radiance is
+//   L_out = source + albedo * E_indirect
+// and E_indirect is the cosine weighted average of L_out over the visible
+// surfaces. The cosine weighted average is directly the irradiance term used
+// by the Unity lighting convention (no extra PI factors).
+[numthreads(4, 4, 4)]
+void Propagate(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+
+    float4 albedoTexel = _VoxelAlbedo.Load(int4(id, 0));
+    if (albedoTexel.a < 0.5)
+    {
+        _IndirectWrite[id] = float4(0, 0, 0, 0);
+        return;
+    }
+
+    float3 n = normalize(_VoxelNormal.Load(int4(id, 0)).xyz);
+    float3 pos = GIVolumeCenter((int3)id);
+    float3 start = pos + n * _RayStart;
+
+    uint count = max((uint)_DirectionCount, 1u);
+    float rot = GIHash01(id.x * 73856093u ^ id.y * 19349663u ^ id.z * 83492791u);
+
+    float3 E = 0;
+    [loop] for (uint i = 0; i < count; i++)
+    {
+        float3 dir = GICosineDirection(n, i, count, rot);
+        int3 hit;
+        float hitT;
+        if (GITraceVoxels(start, dir, 0.0, _MaxTraceDistance, 384, hit, hitT))
+        {
+            float3 hitAlbedo = _VoxelAlbedo.Load(int4(hit, 0)).rgb;
+            float3 hitSource = _SourceTex.Load(int4(hit, 0)).rgb;
+            float3 hitIndirect = _IndirectRead.Load(int4(hit, 0)).rgb;
+            E += hitSource + hitAlbedo * hitIndirect;
+        }
+    }
+    E /= float(count);
+
+    _IndirectWrite[id] = float4(E, 1.0);
+}
+
+// 3x3x3 box filter over occupied voxels. Indirect irradiance is a smooth field,
+// so this removes the per-voxel sampling noise without touching the sharp direct
+// source (which lives in _SourceTex and is never filtered).
+[numthreads(4, 4, 4)]
+void BlurIndirect(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+
+    bool centerOccupied = _VoxelAlbedo.Load(int4(id, 0)).a >= 0.5;
+    float3 sum = centerOccupied ? _IndirectRead.Load(int4(id, 0)).rgb * 2.0 : 0.0;
+    float weight = centerOccupied ? 2.0 : 0.0;
+    [unroll] for (int z = -1; z <= 1; z++)
+    [unroll] for (int y = -1; y <= 1; y++)
+    [unroll] for (int x = -1; x <= 1; x++)
+    {
+        if (x == 0 && y == 0 && z == 0) continue;
+        int3 n = (int3)id + int3(x, y, z);
+        if (!GIInVolume(n)) continue;
+        if (_VoxelAlbedo.Load(int4(n, 0)).a < 0.5) continue;
+        sum += _IndirectRead.Load(int4(n, 0)).rgb;
+        weight += 1.0;
+    }
+    if (weight < 0.5)
+    {
+        _IndirectWrite[id] = float4(0, 0, 0, 0);
+        return;
+    }
+    // Empty voxels adjacent to a surface get the filtered value as well, so the
+    // trilinear screen lookup does not fade to black at voxel boundaries.
+    _IndirectWrite[id] = float4(sum / weight, 1.0);
+}
+
+// Sky visibility is also a smooth function of position; one box pass removes the
+// direction-sampling noise before the value is used at the screen and as a
+// bounce source.
+[numthreads(4, 4, 4)]
+void BlurSky(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+
+    bool centerOccupied = _VoxelAlbedo.Load(int4(id, 0)).a >= 0.5;
+    float3 sum = centerOccupied ? _SkyRead.Load(int4(id, 0)).rgb * 2.0 : 0.0;
+    float weight = centerOccupied ? 2.0 : 0.0;
+    [unroll] for (int z = -1; z <= 1; z++)
+    [unroll] for (int y = -1; y <= 1; y++)
+    [unroll] for (int x = -1; x <= 1; x++)
+    {
+        if (x == 0 && y == 0 && z == 0) continue;
+        int3 n = (int3)id + int3(x, y, z);
+        if (!GIInVolume(n)) continue;
+        if (_VoxelAlbedo.Load(int4(n, 0)).a < 0.5) continue;
+        sum += _SkyRead.Load(int4(n, 0)).rgb;
+        weight += 1.0;
+    }
+    if (weight < 0.5)
+    {
+        _SkyWrite[id] = float4(0, 0, 0, 0);
+        return;
+    }
+    _SkyWrite[id] = float4(sum / weight, 1.0);
+}

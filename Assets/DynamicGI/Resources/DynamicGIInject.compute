@@ -1,0 +1,180 @@
+#pragma kernel InjectDirect
+#pragma kernel ClearIndirect
+
+#include "DynamicGICommon.hlsl"
+
+TextureCube<float4> _SkyCube;
+SamplerState sampler_linear_clamp;
+
+// Conservative occupancy (surface shell dilated by one voxel) used only for
+// direct visibility rays. It seals one-voxel seams without affecting bounces.
+Texture3D<float4> _OccluderTex;
+Texture3D<float> _OutsideMask;   // 1 = air connected to the outdoor volume boundary
+
+RWTexture3D<float4> _SourceRW;
+RWTexture3D<float4> _SkyERW;
+RWTexture3D<float4> _IndirectClearRW;
+
+float3 _SunDirection;      // unit vector pointing towards the sun
+float3 _SunColor;          // linear light colour * intensity
+int    _SunEnabled;
+int    _SkyEnabled;
+float  _SkyIntensity;      // effective sky intensity multiplier
+int    _SkyDirectionCount;
+float  _RayStart;
+float  _OcclusionRayStart;
+int    _HasOutsideMask;
+float  _SunTraceDistance;
+float  _SkyTraceDistance;
+
+int    _LampCount;
+float4 _LampPositions[8];
+float4 _LampColors[8];
+float4 _LampParams[8];      // x = range, y = enabled
+
+// Same traversal as GITraceVoxels, but against the dilated occluder grid.
+bool GIBlockedDilated(float3 origin, float3 dir, float startT, float maxDist)
+{
+    float t = startT;
+    float3 p = origin + dir * t;
+    int3 v = GIVoxelIndex(p);
+    if (!GIInVolume(v)) return false;
+
+    int3 step;
+    step.x = dir.x >= 0.0 ? 1 : -1;
+    step.y = dir.y >= 0.0 ? 1 : -1;
+    step.z = dir.z >= 0.0 ? 1 : -1;
+
+    float3 tMax = float3(1e30, 1e30, 1e30);
+    float3 tDelta = float3(1e30, 1e30, 1e30);
+    [unroll] for (int a = 0; a < 3; a++)
+    {
+        float d = dir[a];
+        if (abs(d) > 1e-7)
+        {
+            float boundary = _VolumeMin[a] + (float(v[a]) + (step[a] > 0 ? 1.0 : 0.0)) * _VolumeVoxelSize[a];
+            tMax[a] = t + (boundary - p[a]) / d;
+            tDelta[a] = _VolumeVoxelSize[a] / abs(d);
+        }
+    }
+
+    [loop] for (int i = 0; i < 384; i++)
+    {
+        if (tMax.x < tMax.y)
+        {
+            if (tMax.x < tMax.z) { v.x += step.x; t = tMax.x; tMax.x += tDelta.x; }
+            else                 { v.z += step.z; t = tMax.z; tMax.z += tDelta.z; }
+        }
+        else
+        {
+            if (tMax.y < tMax.z) { v.y += step.y; t = tMax.y; tMax.y += tDelta.y; }
+            else                 { v.z += step.z; t = tMax.z; tMax.z += tDelta.z; }
+        }
+        if (!GIInVolume(v)) return false;
+        if (t > maxDist) return false;
+        if (_OccluderTex.Load(int4(v, 0)).r > 0.5) return true;
+    }
+    return false;
+}
+
+// Returns 1 when the air at p is connected to the outside of the simulation
+// volume, 0 when it is enclosed by geometry. Outside the volume counts as open.
+float GIOutsideAir(float3 p)
+{
+    if (_HasOutsideMask == 0) return 1.0;
+    int3 v = GIVoxelIndex(p);
+    if (!GIInVolume(v)) return 1.0;
+    return _OutsideMask.Load(int4(v, 0)) > 0.001 ? 1.0 : 0.0;
+}
+
+float3 GISampleSky(float3 pos, float3 n, uint seed)
+{
+    if (_SkyEnabled == 0 || _SkyDirectionCount <= 0) return 0;
+    float3 sum = 0;
+    uint count = (uint)_SkyDirectionCount;
+    float rot = GIHash01(seed);
+    float3 start = pos + n * _OcclusionRayStart;
+    if (GIOutsideAir(start) < 0.5) return 0;
+
+    [loop] for (uint i = 0; i < count; i++)
+    {
+        float3 d = GICosineDirection(n, i, count, rot);
+        if (!GIBlockedDilated(start, d, 0.0, _SkyTraceDistance))
+            sum += _SkyCube.SampleLevel(sampler_linear_clamp, d, 0).rgb;
+    }
+    // Cosine weighted directions: the mean is the irradiance term used by the
+    // solver (matching the Unity light colour convention).
+    return sum * (_SkyIntensity / float(count));
+}
+
+[numthreads(4, 4, 4)]
+void InjectDirect(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+
+    float4 albedoTexel = _VoxelAlbedo.Load(int4(id, 0));
+    float4 normalTexel = _VoxelNormal.Load(int4(id, 0));
+
+    if (albedoTexel.a < 0.5)
+    {
+        _SourceRW[id] = float4(0, 0, 0, 0);
+        _SkyERW[id] = float4(0, 0, 0, 0);
+        return;
+    }
+
+    float3 n = normalize(normalTexel.xyz);
+    float3 pos = GIVolumeCenter((int3)id);
+    float3 albedo = saturate(albedoTexel.rgb);
+    float3 start = pos + n * _OcclusionRayStart;
+    bool outdoorAir = GIOutsideAir(start) > 0.5;
+
+    float3 E = 0;
+    float3 skyE = 0;
+
+    // Sun. The forward URP pass draws the direct sun; this only seeds bounces.
+    if (_SunEnabled != 0 && outdoorAir)
+    {
+        float ndl = saturate(dot(n, _SunDirection));
+        if (ndl > 0.0 && !GIBlockedDilated(start, _SunDirection, 0.0, _SunTraceDistance))
+            E += _SunColor * ndl;
+    }
+
+    // Occlusion aware sky irradiance. A sealed room sees black sky.
+    if (_SkyEnabled != 0 && outdoorAir)
+    {
+        skyE = GISampleSky(pos, n, id.x ^ (id.y << 10) ^ (id.z << 20));
+        E += skyE;
+    }
+
+    // Interior point lights. Independent of the outdoor mode; the forward pass
+    // draws their direct light, this seeds their diffuse bounces.
+    for (int li = 0; li < _LampCount; li++)
+    {
+        if (_LampParams[li].y < 0.5) continue;
+        float3 toLamp = _LampPositions[li].xyz - pos;
+        float dist2 = max(dot(toLamp, toLamp), 1e-6);
+        float dist = sqrt(dist2);
+        float range = max(_LampParams[li].x, 0.001);
+        float factor = dist2 / (range * range);
+        float smoothFactor = saturate(1.0 - factor * factor);
+        smoothFactor *= smoothFactor;
+        float atten = smoothFactor / dist2;
+        float ndl = saturate(dot(n, toLamp / dist));
+        if (ndl > 0.0 && atten > 1e-5)
+        {
+            float3 dir = toLamp / dist;
+            if (!GIBlockedDilated(start, dir, 0.0, max(dist - _OcclusionRayStart, 0.0)))
+                E += _LampColors[li].rgb * (ndl * atten);
+        }
+    }
+
+    _SourceRW[id] = float4(albedo * E, 1.0);
+    _SkyERW[id] = float4(skyE, 1.0);
+}
+
+[numthreads(4, 4, 4)]
+void ClearIndirect(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+    _IndirectClearRW[id] = float4(0, 0, 0, 0);
+}

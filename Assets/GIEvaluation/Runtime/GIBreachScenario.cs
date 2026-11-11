@@ -232,6 +232,7 @@ namespace GIEvaluation
             string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "../Captures")); Directory.CreateDirectory(folder);
             string stem = "gi-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + "-step" + ((int)state + 1) + "-r" + GeometryChanges.Revision;
             ScreenCapture.CaptureScreenshot(Path.Combine(folder, stem + ".png"));
+            var gi = DynamicGI.DynamicGIController.Active;
             var data = new CaptureData
             {
                 utc = DateTime.UtcNow.ToString("O"), scene = gameObject.scene.name, state = state.ToString(),
@@ -245,7 +246,12 @@ namespace GIEvaluation
                 changeFrame = LastChangeFrame, framesSinceChange = Time.frameCount - LastChangeFrame,
                 secondsSinceChange = Time.realtimeSinceStartupAsDouble - LastChangeTime,
                 unity = Application.unityVersion, device = SystemInfo.graphicsDeviceName,
-                note = "Fixture only. No GI implementation or GI accuracy/performance score is provided."
+                giEnabled = gi != null && gi.enableGI,
+                giView = gi != null ? gi.viewMode.ToString() : "not initialised",
+                giBounces = gi != null ? gi.BouncePass : -1,
+                giConverged = gi != null && gi.IsConverged,
+                giVolume = gi != null ? gi.VolumeDimX + "x" + gi.VolumeDimY + "x" + gi.VolumeDimZ : "",
+                note = "Fixture capture. Dynamic GI state is recorded in the gi* fields; see IMPLEMENTATION.md."
             };
             File.WriteAllText(Path.Combine(folder, stem + ".json"), JsonUtility.ToJson(data, true));
             message = "Saved " + stem;
@@ -253,7 +259,9 @@ namespace GIEvaluation
         [Serializable] private sealed class CaptureData
         {
             public string utc, scene, state, lighting, view, unity, device, note;
-            public int geometryRevision, lightingRevision, width, height, frame, changeFrame, framesSinceChange, roofOpening, preset;
+            public int geometryRevision, lightingRevision, width, height, frame, changeFrame, framesSinceChange, roofOpening, preset, giBounces;
+            public bool giEnabled, giConverged;
+            public string giView, giVolume;
             public float skyIntensity, fieldOfView;
             public double secondsSinceChange;
             public bool previewFill, interiorLightsEnabled, shutterClosed;
@@ -290,7 +298,9 @@ namespace GIEvaluation
             GUILayout.BeginArea(new Rect(14, 14, 325, Mathf.Min(Screen.height - 28, 740)), GUI.skin.box);
             panelScroll = GUILayout.BeginScrollView(panelScroll);
             GUILayout.Label("GI LAB / 7 STEPS", new GUIStyle(textStyle) { fontSize = 20, fontStyle = FontStyle.Bold });
-            GUILayout.Label("GI NOT IMPLEMENTED | " + (preview ? "PREVIEW FILL ON" : "EVALUATION"), textStyle);
+            var gi = DynamicGI.DynamicGIController.Active;
+            string giState = gi == null ? "not initialised" : (gi.enableGI ? "ON" : "OFF") + " / " + gi.viewMode;
+            GUILayout.Label("Dynamic GI: " + giState + " | " + (preview ? "PREVIEW FILL ON" : "EVALUATION"), textStyle);
             GUILayout.Label("Outdoor " + environment.lighting + " | Dim lamps " + (environment.interiorLightsEnabled ? "ON" : "OFF"), textStyle);
             GUILayout.Label("Same camera: " + viewNames[View], textStyle);
             GUILayout.Label(Descriptions[(int)state], new GUIStyle(textStyle) { fontSize = 14 });
@@ -307,6 +317,7 @@ namespace GIEvaluation
             GUI.enabled = enabled;
             GUILayout.Label("Sun paths: wall " + (SunVisibleAt("Direct_Control") ? "OPEN" : "BLOCKED") + " | ceiling " + (SunVisibleAt("Roof_Direct_Control") ? "OPEN" : "BLOCKED"), textStyle);
             GUILayout.Label("These paths are geometry checks, not a GI brightness score.", textStyle);
+            GUILayout.Label("Dynamic GI keys: G toggle, O debug view, H hide panel. See the top-right panel.", textStyle);
             GUILayout.Label("B compares the same opening, lights and camera with / without the outside blocker. GI should update the bounced light in shaded areas.", textStyle);
             if (GUILayout.Button(showOptions ? "Hide lighting / capture options" : "Lighting / capture options", GUILayout.Height(28))) showOptions = !showOptions;
             if (showOptions)

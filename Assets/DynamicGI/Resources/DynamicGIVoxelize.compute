@@ -1,0 +1,169 @@
+#pragma kernel ClearVolume
+#pragma kernel SplatTriangles
+#pragma kernel WriteTriangles
+#pragma kernel ResolveVolume
+#pragma kernel DilateOccupancy
+
+#include "DynamicGICommon.hlsl"
+
+struct GITriangle
+{
+    float4 p0;
+    float4 p1;
+    float4 p2;
+    float4 n;
+    float4 albedo;
+    float4 bmin;
+    float4 bmax;
+    float4 pad;
+};
+
+StructuredBuffer<GITriangle> _Triangles;
+int _TriangleCount;
+float _SplatRadius;
+
+RWTexture3D<float4> _AlbedoRW;
+RWTexture3D<float4> _NormalRW;
+RWTexture3D<int>    _ClosenessRW;
+RWTexture3D<float4> _OccluderRW;
+RWStructuredBuffer<uint> _OccluderBuffer;
+
+[numthreads(4, 4, 4)]
+void ClearVolume(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+    _AlbedoRW[id] = float4(0, 0, 0, 0);
+    _NormalRW[id] = float4(0, 0, 0, 0);
+    _ClosenessRW[id] = 0;
+}
+
+int GIClosenessKey(float distance)
+{
+    // Larger key = closer to the voxel centre. Clamped well below int max.
+    return (int)clamp(1000000.0 / (distance + 0.0005), 1.0, 2000000000.0);
+}
+
+void GISplatBounds(GITriangle t, out int3 lo, out int3 hi)
+{
+    int3 a = (int3)floor((t.bmin.xyz - _VolumeMin) / _VolumeVoxelSize) - 1;
+    int3 b = (int3)floor((t.bmax.xyz - _VolumeMin) / _VolumeVoxelSize) + 1;
+    lo = max(a, int3(0, 0, 0));
+    hi = min(b, _VolumeDims - 1);
+}
+
+[numthreads(64, 1, 1)]
+void SplatTriangles(uint3 dispatchId : SV_DispatchThreadID)
+{
+    uint ti = dispatchId.x;
+    if (ti >= (uint)_TriangleCount) return;
+
+    GITriangle t = _Triangles[ti];
+    if (dot(t.n.xyz, t.n.xyz) < 0.25) return;
+
+    int3 lo, hi;
+    GISplatBounds(t, lo, hi);
+    if (any(lo > hi)) return;
+
+    float3 p0 = t.p0.xyz;
+    float3 p1 = t.p1.xyz;
+    float3 p2 = t.p2.xyz;
+
+    for (int z = lo.z; z <= hi.z; z++)
+    for (int y = lo.y; y <= hi.y; y++)
+    for (int x = lo.x; x <= hi.x; x++)
+    {
+        int3 v = int3(x, y, z);
+        float3 c = GIVolumeCenter(v);
+        float d = GIPointTriangleDistance(c, p0, p1, p2);
+        if (d <= _SplatRadius)
+        {
+            int key = GIClosenessKey(d);
+            InterlockedMax(_ClosenessRW[v], key);
+        }
+    }
+}
+
+[numthreads(64, 1, 1)]
+void WriteTriangles(uint3 dispatchId : SV_DispatchThreadID)
+{
+    uint ti = dispatchId.x;
+    if (ti >= (uint)_TriangleCount) return;
+
+    GITriangle t = _Triangles[ti];
+    if (dot(t.n.xyz, t.n.xyz) < 0.25) return;
+
+    int3 lo, hi;
+    GISplatBounds(t, lo, hi);
+    if (any(lo > hi)) return;
+
+    float3 p0 = t.p0.xyz;
+    float3 p1 = t.p1.xyz;
+    float3 p2 = t.p2.xyz;
+    float3 n = normalize(t.n.xyz);
+    float3 albedo = saturate(t.albedo.xyz);
+
+    for (int z = lo.z; z <= hi.z; z++)
+    for (int y = lo.y; y <= hi.y; y++)
+    for (int x = lo.x; x <= hi.x; x++)
+    {
+        int3 v = int3(x, y, z);
+        float3 c = GIVolumeCenter(v);
+        float d = GIPointTriangleDistance(c, p0, p1, p2);
+        if (d <= _SplatRadius)
+        {
+            int key = GIClosenessKey(d);
+            // Exactly the winner of the previous pass (ties may overwrite each
+            // other; the surfaces are equally close so this is harmless).
+            if (_ClosenessRW[v] == key)
+            {
+                _AlbedoRW[v] = float4(albedo, 1.0);
+                _NormalRW[v] = float4(n, 0.0);
+            }
+        }
+    }
+}
+
+[numthreads(4, 4, 4)]
+void ResolveVolume(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+    int key = _ClosenessRW[id];
+    if (key > 0)
+    {
+        float4 a = _AlbedoRW[id];
+        a.a = 1.0;
+        _AlbedoRW[id] = a;
+    }
+    else
+    {
+        _AlbedoRW[id] = float4(0, 0, 0, 0);
+        _NormalRW[id] = float4(0, 0, 0, 0);
+    }
+}
+
+// Conservative occluder used for sun / sky visibility rays. Dilating the
+// surface shell by one voxel closes the one-voxel pinholes that can appear at
+// mesh seams without closing real openings (which are several voxels wide).
+[numthreads(4, 4, 4)]
+void DilateOccupancy(uint3 id : SV_DispatchThreadID)
+{
+    if (any(id >= (uint3)_VolumeDims)) return;
+    float occupied = 0.0;
+    [loop] for (int z = -1; z <= 1; z++)
+    {
+        [loop] for (int y = -1; y <= 1; y++)
+        {
+            [loop] for (int x = -1; x <= 1; x++)
+            {
+                int3 n = (int3)id + int3(x, y, z);
+                if (!GIInVolume(n)) continue;
+                if (_AlbedoRW[n].a > 0.5) { occupied = 1.0; break; }
+            }
+            if (occupied > 0.5) break;
+        }
+        if (occupied > 0.5) break;
+    }
+    _OccluderRW[id] = float4(occupied, occupied, occupied, occupied);
+    int flat = int(id.x) + _VolumeDims.x * (int(id.y) + _VolumeDims.y * int(id.z));
+    _OccluderBuffer[flat] = (uint)occupied;
+}
