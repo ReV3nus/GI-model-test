@@ -10,6 +10,5 @@ T 自动执行流程，R 复位，P 保存截图与状态。其他测试开关�
 
 ## 评测文档
 
-- [报告](Docs/GIEvaluation/报告.md)
-- [评测报告](Docs/GIEvaluation/评测报告.md)
-- [配套图片与评测材料](Docs/GIEvaluation/README.md)
+- [报告](Docs/报告.md)
+- [评测报告](Docs/评测报告.md)
